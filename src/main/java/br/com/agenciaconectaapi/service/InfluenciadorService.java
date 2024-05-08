@@ -1,8 +1,8 @@
 package br.com.agenciaconectaapi.service;
 
 import br.com.agenciaconectaapi.dto.InfluenciadorDto;
-import br.com.agenciaconectaapi.exception.InfluencerAlreadyExistsException;
-import br.com.agenciaconectaapi.exception.InfluencerNotFoundException;
+import br.com.agenciaconectaapi.exception.InfluenciadorJaExisteException;
+import br.com.agenciaconectaapi.exception.InfluenciadorNaoEncontradoException;
 import br.com.agenciaconectaapi.model.CardInformacao;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
@@ -25,7 +25,7 @@ public class InfluenciadorService {
     public Influenciador buscarInfluenciadorPorId(Integer idInfluenciador){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(idInfluenciador);
 
-        return optInfluenciador.orElseThrow(() -> new InfluencerNotFoundException(INFLUENCIADOR_NAO_ENCONTRADO));
+        return optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
     }
 
     public List<Influenciador> buscaTodosInfluenciadores(){
@@ -33,7 +33,7 @@ public class InfluenciadorService {
         List<Influenciador> todosInfluencers = influenciadorRepository.findAll();
 
         if(todosInfluencers.isEmpty()){
-            throw new InfluencerNotFoundException(NENHUM_INFLUENCIADOR_ENCONTRADO);
+            throw new InfluenciadorNaoEncontradoException(NENHUM_INFLUENCIADOR_ENCONTRADO);
         }
 
         return todosInfluencers;
@@ -43,7 +43,7 @@ public class InfluenciadorService {
         Optional<Influenciador> optInfluencer = influenciadorRepository.findInfluenciadorByNomeContaining(influenciadorDto.getNome());
 
         optInfluencer.ifPresent((influenciador) -> {
-            throw new InfluencerAlreadyExistsException("Influenciador " + influenciador.getNome() + " ja cadastrado.");
+            throw new InfluenciadorJaExisteException("Influenciador " + influenciador.getNome() + " ja cadastrado.");
         });
 
         Influenciador influenciador = new Influenciador(influenciadorDto);
@@ -55,7 +55,7 @@ public class InfluenciadorService {
             Optional<Influenciador> optInfluencer = influenciadorRepository.findInfluenciadorByNomeContaining(influenciadorDto.getNome());
 
             optInfluencer.ifPresent((influenciador) -> {
-                throw new InfluencerAlreadyExistsException(INFLUENCIADOR_JA_EXISTENTE);
+                throw new InfluenciadorJaExisteException(INFLUENCIADOR_JA_EXISTENTE);
             });
 
             Influenciador influenciador = new Influenciador(influenciadorDto);
@@ -66,7 +66,7 @@ public class InfluenciadorService {
     public void atualizarStatusInfluenciadorPorId(Integer idInfluenciador){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(idInfluenciador);
 
-        Influenciador influenciador = optInfluenciador.orElseThrow(() -> new InfluencerNotFoundException(INFLUENCIADOR_NAO_ENCONTRADO));
+        Influenciador influenciador = optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
 
         influenciador.mudarStatus();
         influenciadorRepository.save(influenciador);
@@ -75,7 +75,7 @@ public class InfluenciadorService {
     public void excluirInfluenciador(Integer idInfluenciador){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(idInfluenciador);
 
-        optInfluenciador.orElseThrow(() -> new InfluencerNotFoundException(INFLUENCIADOR_NAO_ENCONTRADO));
+        optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
 
         influenciadorRepository.delete(optInfluenciador.get());
     }
@@ -83,7 +83,7 @@ public class InfluenciadorService {
     public void atualizarInfluenciador(InfluenciadorDto influenciadorDto, Integer id){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(id);
 
-        optInfluenciador.orElseThrow(() -> new InfluencerNotFoundException(INFLUENCIADOR_NAO_ENCONTRADO));
+        optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
 
         Influenciador influenciador = new Influenciador(influenciadorDto);
         influenciador.setId(id);

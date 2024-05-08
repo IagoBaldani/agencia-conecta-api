@@ -12,7 +12,7 @@ public class ExceptionCatcher {
     public static ResponseEntity<?> collect(Exception e){
         LOGGER.trace(e.getMessage(), e);
 
-        if(e.getClass() == InfluencerAlreadyExistsException.class || e.getClass() == InfluencerNotFoundException.class){
+        if(e.getClass() == InfluenciadorJaExisteException.class || e.getClass() == InfluenciadorNaoEncontradoException.class){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
         else{
