@@ -135,6 +135,10 @@ public class Influenciador{
         this.ativo = ativo;
     }
 
+    public void mudarStatus(){
+        this.ativo = !this.ativo;
+    }
+
     @Override
     public String toString() {
         return "Influenciador{" +

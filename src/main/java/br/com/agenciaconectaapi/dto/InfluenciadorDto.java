@@ -27,8 +27,6 @@ public class InfluenciadorDto {
     private String instagram;
     private String tiktok;
     private String youtube;
-    @NotNull
-    private boolean ativo;
 
     public String getNome() {
         return nome;
@@ -107,13 +105,6 @@ public class InfluenciadorDto {
         this.youtube = youtube;
     }
 
-    public boolean isAtivo() {
-        return ativo;
-    }
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -121,7 +112,6 @@ public class InfluenciadorDto {
 
         InfluenciadorDto that = (InfluenciadorDto) o;
 
-        if (ativo != that.ativo) return false;
         if (!nome.equals(that.nome)) return false;
         if (!cpf.equals(that.cpf)) return false;
         if (!celular.equals(that.celular)) return false;
@@ -148,7 +138,6 @@ public class InfluenciadorDto {
         result = 31 * result + instagram.hashCode();
         result = 31 * result + tiktok.hashCode();
         result = 31 * result + youtube.hashCode();
-        result = 31 * result + (ativo ? 1 : 0);
         return result;
     }
 }
