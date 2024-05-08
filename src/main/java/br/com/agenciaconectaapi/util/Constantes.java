@@ -6,6 +6,7 @@ public final class Constantes {
     public static final String INFLUENCIADOR_NAO_ENCONTRADO = "Influenciador n\u00E3o encontrado.";
     public static final String INFLUENCIADOR_JA_EXISTENTE = "Influenciador j\u00E1 cadastrado.";
     public static final String NENHUM_INFLUENCIADOR_ENCONTRADO = "Nenhum influenciador cadastrado.";
+    public static final String CARD_NAO_ENCONTRADO = "Card n\u00E3o encontrado.";
 
     /*Mensagens de sucesso*/
     public static final String INFLUENCIADOR_CRIADO= "Influencer criado com sucesso.";
