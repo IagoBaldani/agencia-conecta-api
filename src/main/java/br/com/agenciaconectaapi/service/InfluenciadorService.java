@@ -6,7 +6,6 @@ import br.com.agenciaconectaapi.exception.InfluencerNotFoundException;
 import br.com.agenciaconectaapi.model.CardInformacao;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +16,11 @@ import static br.com.agenciaconectaapi.util.Constantes.*;
 @Service
 public class InfluenciadorService {
 
-    @Autowired
-    private InfluenciadorRepository influenciadorRepository;
+    private final InfluenciadorRepository influenciadorRepository;
+
+    public InfluenciadorService(InfluenciadorRepository influenciadorRepository) {
+        this.influenciadorRepository = influenciadorRepository;
+    }
 
     public Influenciador buscarInfluenciadorPorId(Integer idInfluenciador){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(idInfluenciador);

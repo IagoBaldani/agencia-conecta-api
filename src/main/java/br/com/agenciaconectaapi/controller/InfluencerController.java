@@ -5,7 +5,6 @@ import br.com.agenciaconectaapi.exception.ExceptionCatcher;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.service.InfluenciadorService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +18,11 @@ import static br.com.agenciaconectaapi.util.Constantes.*;
 @RequestMapping("influenciador")
 public class InfluencerController {
 
-    @Autowired
-    private InfluenciadorService influenciadorService;
+    private final InfluenciadorService influenciadorService;
+
+    public InfluencerController(InfluenciadorService influenciadorService) {
+        this.influenciadorService = influenciadorService;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> buscarInfluenciador(@PathVariable(name = "id") Integer id){
