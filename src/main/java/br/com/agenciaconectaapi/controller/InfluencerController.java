@@ -2,12 +2,9 @@ package br.com.agenciaconectaapi.controller;
 
 import br.com.agenciaconectaapi.dto.InfluenciadorDto;
 import br.com.agenciaconectaapi.exception.ExceptionCatcher;
-import br.com.agenciaconectaapi.model.CardInformacao;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.service.InfluenciadorService;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,8 +18,6 @@ import static br.com.agenciaconectaapi.util.Constantes.*;
 @RestController
 @RequestMapping("influenciador")
 public class InfluencerController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(InfluencerController.class);
 
     @Autowired
     private InfluenciadorService influenciadorService;
