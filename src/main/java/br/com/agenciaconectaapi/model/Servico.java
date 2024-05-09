@@ -1,8 +1,10 @@
 package br.com.agenciaconectaapi.model;
 
+import br.com.agenciaconectaapi.dto.ServicoDto;
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -12,25 +14,40 @@ public class Servico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
     private String nomeContratante;
     @ManyToOne
     @JoinColumn(name = "influenciador_id", nullable = false)
     private Influenciador influenciador;
-    
     private String celularContratante;
     private String emailContratante;
     private String proposta;
-    private LocalDateTime dataInicio;
-    private LocalDateTime dataFim;
-    private Integer porcentagem;
+    private LocalDate dataInicio;
+    private LocalDate dataFim;
+    private BigDecimal porcentagem;
     private BigDecimal valor;
     private String descricaoTipoPagamento;
     private boolean usoImagem;
     private boolean impulsionamento;
     private boolean exclusividade;
+    private boolean ativo;
 
     public Servico() {
+    }
+
+    public Servico(ServicoDto servicoDto) {
+        this.nomeContratante = servicoDto.getNomeContratante();
+        this.celularContratante = servicoDto.getCelularContratante();
+        this.emailContratante = servicoDto.getEmailContratante();
+        this.proposta = servicoDto.getProposta();
+        this.dataInicio = servicoDto.getDataInicio();
+        this.dataFim = servicoDto.getDataFim();
+        this.porcentagem = servicoDto.getPorcentagem();
+        this.valor = servicoDto.getValor();
+        this.descricaoTipoPagamento = servicoDto.getDescricaoTipoPagamento();
+        this.usoImagem = servicoDto.isUsoImagem();
+        this.impulsionamento = servicoDto.isImpulsionamento();
+        this.exclusividade = servicoDto.isExclusividade();
+        this.ativo = true;
     }
 
     public Integer getId() {
@@ -75,24 +92,24 @@ public class Servico {
         this.proposta = proposta;
     }
 
-    public LocalDateTime getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
-    public void setDataInicio(LocalDateTime dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public LocalDateTime getDataFim() {
+    public LocalDate getDataFim() {
         return dataFim;
     }
-    public void setDataFim(LocalDateTime dataFim) {
+    public void setDataFim(LocalDate dataFim) {
         this.dataFim = dataFim;
     }
 
-    public Integer getPorcentagem() {
+    public BigDecimal getPorcentagem() {
         return porcentagem;
     }
-    public void setPorcentagem(Integer porcentagem) {
+    public void setPorcentagem(BigDecimal porcentagem) {
         this.porcentagem = porcentagem;
     }
 
@@ -131,6 +148,13 @@ public class Servico {
         this.exclusividade = exclusividade;
     }
 
+    public boolean isAtivo() {
+        return ativo;
+    }
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
     @Override
     public String toString() {
         return "Servico{" +
@@ -148,6 +172,7 @@ public class Servico {
                 ", usoImagem=" + usoImagem +
                 ", impulsionamento=" + impulsionamento +
                 ", exclusividade=" + exclusividade +
+                ", ativo=" + ativo +
                 '}';
     }
 
@@ -161,6 +186,7 @@ public class Servico {
         if (usoImagem != servico.usoImagem) return false;
         if (impulsionamento != servico.impulsionamento) return false;
         if (exclusividade != servico.exclusividade) return false;
+        if (ativo != servico.ativo) return false;
         if (!id.equals(servico.id)) return false;
         if (!nomeContratante.equals(servico.nomeContratante)) return false;
         if (!influenciador.equals(servico.influenciador)) return false;
@@ -191,6 +217,7 @@ public class Servico {
         result = 31 * result + (usoImagem ? 1 : 0);
         result = 31 * result + (impulsionamento ? 1 : 0);
         result = 31 * result + (exclusividade ? 1 : 0);
+        result = 31 * result + (ativo ? 1 : 0);
         return result;
     }
 }
