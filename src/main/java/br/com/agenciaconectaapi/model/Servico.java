@@ -155,6 +155,10 @@ public class Servico {
         this.ativo = ativo;
     }
 
+    public void mudarStatus(){
+        this.ativo = !this.ativo;
+    }
+
     @Override
     public String toString() {
         return "Servico{" +
