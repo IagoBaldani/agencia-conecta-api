@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static br.com.agenciaconectaapi.util.Constantes.*;
@@ -109,12 +110,12 @@ public class InfluencerController {
         }
     }
 
-    @RequestMapping(value = "/cards/{cardInformacao}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> buscaCardsInformacao(@PathVariable(name = "cardInformacao") String descricaoCardProcurado){
+    @RequestMapping(value = "/cards",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> buscaCardsInformacao(@RequestParam(value = "informacao") String descricaoCardProcurado){
         try{
-            String informacaoBuscada = influenciadorService.buscaInformacaoCards(descricaoCardProcurado);
+            HashMap<String, String> map = influenciadorService.buscaInformacaoCards(descricaoCardProcurado);
 
-            return ResponseEntity.status(HttpStatus.OK).body(informacaoBuscada);
+            return ResponseEntity.status(HttpStatus.OK).body(map);
         }
         catch (Exception e){
             return ExceptionCatcher.collect(e);

@@ -9,6 +9,7 @@ import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -99,18 +100,23 @@ public class InfluenciadorService {
         return influenciadorRepository.save(influenciador);
     }
 
-    public String buscaInformacaoCards(String descricaoCardProcurado){
+    public HashMap<String, String> buscaInformacaoCards(String descricaoCardProcurado){
+        HashMap<String, String> map = new HashMap<>();
+
         if(descricaoCardProcurado.equals(CardInformacao.NUMERO_INFLUENCIADORES_ATIVOS.getDescricao())){
-            return influenciadorRepository.getNumeroInfluenciadoresAtivos();
+            map.put("influencers_ativos", influenciadorRepository.getNumeroInfluenciadoresAtivos());
         }
         else if(descricaoCardProcurado.equals(CardInformacao.INFLUENCIADOR_MAIS_ANTIGO.getDescricao())){
-            return influenciadorRepository.findNomeInfluenciadorMaisAntigo();
+            map.put("influencer_antigo", influenciadorRepository.findNomeInfluenciadorMaisAntigo());
         }
         else if(descricaoCardProcurado.equals(CardInformacao.INFLUENCIADOR_MAIS_RECENTE.getDescricao())){
-            return influenciadorRepository.findNomeInfluenciadorMaisRecente();
+            map.put("influencer_recente", influenciadorRepository.findNomeInfluenciadorMaisRecente());
+        }
+        else {
+            throw new RuntimeException(CARD_NAO_ENCONTRADO);
         }
 
-        throw new RuntimeException(CARD_NAO_ENCONTRADO);
+        return map;
     }
 
 }
