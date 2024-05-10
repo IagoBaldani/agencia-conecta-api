@@ -8,6 +8,7 @@ import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +40,7 @@ public class InfluenciadorService {
         return todosInfluencers;
     }
 
-    public void criarInfluenciador(InfluenciadorDto influenciadorDto){
+    public Influenciador criarInfluenciador(InfluenciadorDto influenciadorDto){
         Optional<Influenciador> optInfluencer = influenciadorRepository.findInfluenciadorByNomeContaining(influenciadorDto.getNome());
 
         optInfluencer.ifPresent((influenciador) -> {
@@ -47,10 +48,12 @@ public class InfluenciadorService {
         });
 
         Influenciador influenciador = new Influenciador(influenciadorDto);
-        influenciadorRepository.save(influenciador);
+        return influenciadorRepository.save(influenciador);
     }
 
-    public void criarInfluenciadoresEmLote(List<InfluenciadorDto> listInfluenciadorDto){
+    public List<Influenciador> criarInfluenciadoresEmLote(List<InfluenciadorDto> listInfluenciadorDto){
+        List<Influenciador> listaInfluenciadores = new ArrayList<Influenciador>();
+
         listInfluenciadorDto.forEach((influenciadorDto) -> {
             Optional<Influenciador> optInfluencer = influenciadorRepository.findInfluenciadorByNomeContaining(influenciadorDto.getNome());
 
@@ -59,28 +62,33 @@ public class InfluenciadorService {
             });
 
             Influenciador influenciador = new Influenciador(influenciadorDto);
-            influenciadorRepository.save(influenciador);
+            influenciador = influenciadorRepository.save(influenciador);
+
+            listaInfluenciadores.add(influenciador);
         });
+
+        return listaInfluenciadores;
     }
 
-    public void atualizarStatusInfluenciadorPorId(Integer idInfluenciador){
+    public Influenciador atualizarStatusInfluenciadorPorId(Integer idInfluenciador){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(idInfluenciador);
 
         Influenciador influenciador = optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
-
         influenciador.mudarStatus();
-        influenciadorRepository.save(influenciador);
+
+        return influenciadorRepository.save(influenciador);
     }
 
-    public void excluirInfluenciador(Integer idInfluenciador){
+    public Influenciador excluirInfluenciador(Integer idInfluenciador){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(idInfluenciador);
 
         optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
-
         influenciadorRepository.delete(optInfluenciador.get());
+
+        return optInfluenciador.get();
     }
 
-    public void atualizarInfluenciador(InfluenciadorDto influenciadorDto, Integer id){
+    public Influenciador atualizarInfluenciador(InfluenciadorDto influenciadorDto, Integer id){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(id);
 
         optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
@@ -88,7 +96,7 @@ public class InfluenciadorService {
         Influenciador influenciador = new Influenciador(influenciadorDto);
         influenciador.setId(id);
 
-        influenciadorRepository.save(influenciador);
+        return influenciadorRepository.save(influenciador);
     }
 
     public String buscaInformacaoCards(String descricaoCardProcurado){

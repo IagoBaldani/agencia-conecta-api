@@ -1,6 +1,7 @@
 package br.com.agenciaconectaapi.controller;
 
 import br.com.agenciaconectaapi.dto.InfluenciadorDto;
+import br.com.agenciaconectaapi.dto.RetornoDto;
 import br.com.agenciaconectaapi.exception.ExceptionCatcher;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.service.InfluenciadorService;
@@ -49,11 +50,11 @@ public class InfluencerController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> criarInfluenciador(@Valid @RequestBody InfluenciadorDto influenciadorDto){
+    public ResponseEntity<RetornoDto> criarInfluenciador(@Valid @RequestBody InfluenciadorDto influenciadorDto){
         try {
-            influenciadorService.criarInfluenciador(influenciadorDto);
+            Influenciador influenciador = influenciadorService.criarInfluenciador(influenciadorDto);
 
-            return ResponseEntity.status(HttpStatus.OK).body(INFLUENCIADOR_CRIADO);
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(INFLUENCIADOR_CRIADO,influenciador));
         }
         catch (Exception e) {
             return ExceptionCatcher.collect(e);
@@ -61,11 +62,11 @@ public class InfluencerController {
     }
 
     @RequestMapping(value = "/lote", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> criarInfluenciadoresEmLote(@Valid @RequestBody List<InfluenciadorDto> listInfluenciadorDto){
+    public ResponseEntity<RetornoDto> criarInfluenciadoresEmLote(@Valid @RequestBody List<InfluenciadorDto> listInfluenciadorDto){
         try {
-            influenciadorService.criarInfluenciadoresEmLote(listInfluenciadorDto);
+            List<Influenciador> influenciadores = influenciadorService.criarInfluenciadoresEmLote(listInfluenciadorDto);
 
-            return ResponseEntity.status(HttpStatus.OK).body(INFLUENCIADOR_CRIADOS_LOTE);
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(INFLUENCIADOR_CRIADOS_LOTE, influenciadores));
         }
         catch (Exception e) {
             return ExceptionCatcher.collect(e);
@@ -73,11 +74,11 @@ public class InfluencerController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> excluirInfluenciador(@PathVariable(value = "id") Integer id){
+    public ResponseEntity<RetornoDto> excluirInfluenciador(@PathVariable(value = "id") Integer id){
         try {
-            influenciadorService.excluirInfluenciador(id);
+            Influenciador influenciador = influenciadorService.excluirInfluenciador(id);
 
-            return ResponseEntity.status(HttpStatus.OK).body(INFLUENCIADOR_DELETADO);
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(INFLUENCIADOR_DELETADO, influenciador));
         }
         catch (Exception e) {
             return ExceptionCatcher.collect(e);
@@ -85,11 +86,11 @@ public class InfluencerController {
     }
 
     @RequestMapping(value = "/status/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> atualizarStatusInfluenciador(@PathVariable(value = "id") Integer id){
+    public ResponseEntity<RetornoDto> atualizarStatusInfluenciador(@PathVariable(value = "id") Integer id){
         try {
-            influenciadorService.atualizarStatusInfluenciadorPorId(id);
+            Influenciador influenciador = influenciadorService.atualizarStatusInfluenciadorPorId(id);
 
-            return ResponseEntity.status(HttpStatus.OK).body(INFLUENCIADOR_COM_STATUS_ALTERADO);
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(INFLUENCIADOR_COM_STATUS_ALTERADO, influenciador));
         }
         catch (Exception e) {
             return ExceptionCatcher.collect(e);
@@ -97,11 +98,11 @@ public class InfluencerController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> atualizarInfluenciador(@RequestBody @Valid InfluenciadorDto influenciadorDto, @PathVariable(value = "id") Integer id){
+    public ResponseEntity<RetornoDto> atualizarInfluenciador(@RequestBody @Valid InfluenciadorDto influenciadorDto, @PathVariable(value = "id") Integer id){
         try {
-            influenciadorService.atualizarInfluenciador(influenciadorDto, id);
+            Influenciador influenciador = influenciadorService.atualizarInfluenciador(influenciadorDto, id);
 
-            return ResponseEntity.status(HttpStatus.OK).body(INFLUENCIADOR_ALTERADO);
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(INFLUENCIADOR_ALTERADO, influenciador));
         }
         catch (Exception e) {
             return ExceptionCatcher.collect(e);
