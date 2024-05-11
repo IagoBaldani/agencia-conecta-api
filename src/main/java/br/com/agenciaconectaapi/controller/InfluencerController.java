@@ -27,11 +27,11 @@ public class InfluencerController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> buscarInfluenciador(@PathVariable(name = "id") Integer id){
+    public ResponseEntity<RetornoDto> buscarInfluenciador(@PathVariable(name = "id") Integer id){
         try {
             Influenciador influenciador = influenciadorService.buscarInfluenciadorPorId(id);
 
-            return ResponseEntity.ok(influenciador);
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, influenciador));
         }
         catch (Exception e) {
             return ExceptionCatcher.collect(e);
@@ -39,11 +39,11 @@ public class InfluencerController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> buscarTodosInfluenciadores(){
+    public ResponseEntity<RetornoDto> buscarTodosInfluenciadores(){
         try {
             List<Influenciador> todosInfluenciadores = influenciadorService.buscaTodosInfluenciadores();
 
-            return ResponseEntity.status(HttpStatus.OK).body(todosInfluenciadores);
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, todosInfluenciadores));
         }
         catch (Exception e) {
             return ExceptionCatcher.collect(e);
@@ -111,11 +111,11 @@ public class InfluencerController {
     }
 
     @RequestMapping(value = "/cards",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> buscaCardsInformacao(@RequestParam(value = "informacao") String descricaoCardProcurado){
+    public ResponseEntity<RetornoDto> buscaCardsInformacao(@RequestParam(value = "informacao") String descricaoCardProcurado){
         try{
             HashMap<String, String> map = influenciadorService.buscaInformacaoCards(descricaoCardProcurado);
 
-            return ResponseEntity.status(HttpStatus.OK).body(map);
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, map));
         }
         catch (Exception e){
             return ExceptionCatcher.collect(e);

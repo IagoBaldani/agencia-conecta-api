@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name="influenciadores")
+@Table(name="INFLUENCIADORES")
 public class Influenciador{
 
     @Id

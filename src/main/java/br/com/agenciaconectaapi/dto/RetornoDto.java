@@ -1,4 +1,4 @@
 package br.com.agenciaconectaapi.dto;
 
-public record RetornoDto(String mensagem, Object objetoImpactado) {
+public record RetornoDto(String mensagem, Object retorno) {
 }

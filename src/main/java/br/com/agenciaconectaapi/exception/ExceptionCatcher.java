@@ -11,7 +11,7 @@ public class ExceptionCatcher {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionCatcher.class);
 
     public static ResponseEntity<RetornoDto> collect(Exception e){
-        RetornoDto retornoDto = new RetornoDto(e.getMessage(),e);
+        RetornoDto retornoDto = new RetornoDto(e.getMessage(), e.getClass());
         LOGGER.trace(e.getMessage(), e);
 
         if(e.getClass() == InfluenciadorJaExisteException.class || e.getClass() == InfluenciadorNaoEncontradoException.class){
