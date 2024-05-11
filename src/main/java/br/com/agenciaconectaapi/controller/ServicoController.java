@@ -1,6 +1,5 @@
 package br.com.agenciaconectaapi.controller;
 
-import br.com.agenciaconectaapi.dto.CardFinancas;
 import br.com.agenciaconectaapi.dto.RetornoDto;
 import br.com.agenciaconectaapi.dto.ServicoDto;
 import br.com.agenciaconectaapi.exception.ExceptionCatcher;
@@ -113,18 +112,6 @@ public class ServicoController {
             RetornoDto retornoDto = new RetornoDto(SERVICO_DELETADO,servico);
 
             return ResponseEntity.status(HttpStatus.OK).body(retornoDto);
-        }
-        catch (Exception e){
-            return ExceptionCatcher.collect(e);
-        }
-    }
-
-    @RequestMapping(value =  "/cardsFinancas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RetornoDto> buscaCardsFinancas(@RequestParam(name = "mes") Integer mes, @RequestParam(name = "ano") Integer ano){
-        try{
-            List<CardFinancas> cardsFinancas = servicoService.buscaCardsFinancas(mes, ano);
-
-            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, cardsFinancas));
         }
         catch (Exception e){
             return ExceptionCatcher.collect(e);

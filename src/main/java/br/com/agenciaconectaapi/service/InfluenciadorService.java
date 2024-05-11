@@ -3,13 +3,11 @@ package br.com.agenciaconectaapi.service;
 import br.com.agenciaconectaapi.dto.InfluenciadorDto;
 import br.com.agenciaconectaapi.exception.InfluenciadorJaExisteException;
 import br.com.agenciaconectaapi.exception.InfluenciadorNaoEncontradoException;
-import br.com.agenciaconectaapi.model.CardInformacao;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +51,7 @@ public class InfluenciadorService {
     }
 
     public List<Influenciador> criarInfluenciadoresEmLote(List<InfluenciadorDto> listInfluenciadorDto){
-        List<Influenciador> listaInfluenciadores = new ArrayList<Influenciador>();
+        List<Influenciador> listaInfluenciadores = new ArrayList<>();
 
         listInfluenciadorDto.forEach((influenciadorDto) -> {
             Optional<Influenciador> optInfluencer = influenciadorRepository.findInfluenciadorByNomeContaining(influenciadorDto.getNome());
@@ -100,23 +98,6 @@ public class InfluenciadorService {
         return influenciadorRepository.save(influenciador);
     }
 
-    public HashMap<String, String> buscaInformacaoCards(String descricaoCardProcurado){
-        HashMap<String, String> map = new HashMap<>();
 
-        if(descricaoCardProcurado.equals(CardInformacao.NUMERO_INFLUENCIADORES_ATIVOS.getDescricao())){
-            map.put("influencers_ativos", influenciadorRepository.getNumeroInfluenciadoresAtivos());
-        }
-        else if(descricaoCardProcurado.equals(CardInformacao.INFLUENCIADOR_MAIS_ANTIGO.getDescricao())){
-            map.put("influencer_antigo", influenciadorRepository.findNomeInfluenciadorMaisAntigo());
-        }
-        else if(descricaoCardProcurado.equals(CardInformacao.INFLUENCIADOR_MAIS_RECENTE.getDescricao())){
-            map.put("influencer_recente", influenciadorRepository.findNomeInfluenciadorMaisRecente());
-        }
-        else {
-            throw new RuntimeException(CARD_NAO_ENCONTRADO);
-        }
-
-        return map;
-    }
 
 }

@@ -1,9 +1,9 @@
 package br.com.agenciaconectaapi.model;
 
 public enum CardInformacao {
-    NUMERO_INFLUENCIADORES_ATIVOS("influencers_ativos"),
-    INFLUENCIADOR_MAIS_RECENTE("influencer_recente"),
-    INFLUENCIADOR_MAIS_ANTIGO("influencer_antigo");
+    NUMERO_INFLUENCIADORES_ATIVOS("ativos"),
+    INFLUENCIADOR_MAIS_RECENTE("mais_recente"),
+    INFLUENCIADOR_MAIS_ANTIGO("mais_antigo");
 
     private final String descricao;
 
