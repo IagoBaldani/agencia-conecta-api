@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 
 public class ExceptionCatcher {
 
@@ -16,6 +17,9 @@ public class ExceptionCatcher {
 
         if(e.getClass() == InfluenciadorJaExisteException.class || e.getClass() == InfluenciadorNaoEncontradoException.class){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(retornoDto);
+        }
+        if(e.getClass() == BadCredentialsException.class){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(retornoDto);
         }
         else{
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(retornoDto);

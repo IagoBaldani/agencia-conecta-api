@@ -21,4 +21,5 @@ public final class Constantes {
     public static final String SERVICO_ALTERADO= "Servico alterado com sucesso.";
     public static final String SERVICO_DELETADO= "Servico deletado com sucesso.";
     public static final String BUSCA_CONCLUIDA= "Busca concluida com sucesso.";
+    public static final String LOGIN_CONCLUIDO = "Login concluido com sucesso.";
 }
