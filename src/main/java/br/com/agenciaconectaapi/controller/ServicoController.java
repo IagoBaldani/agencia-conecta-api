@@ -69,7 +69,7 @@ public class ServicoController {
             Servico servico = servicoService.criarServico(servicoDto);
             RetornoDto retornoDto = new RetornoDto(SERVICO_CRIADO,servico);
 
-            return ResponseEntity.status(HttpStatus.OK).body(retornoDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(retornoDto);
         }
         catch (Exception e){
             return ExceptionCatcher.collect(e);

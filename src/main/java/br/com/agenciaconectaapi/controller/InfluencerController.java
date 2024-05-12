@@ -54,7 +54,7 @@ public class InfluencerController {
         try {
             Influenciador influenciador = influenciadorService.criarInfluenciador(influenciadorDto);
 
-            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(INFLUENCIADOR_CRIADO,influenciador));
+            return ResponseEntity.status(HttpStatus.CREATED).body(new RetornoDto(INFLUENCIADOR_CRIADO,influenciador));
         }
         catch (Exception e) {
             return ExceptionCatcher.collect(e);
