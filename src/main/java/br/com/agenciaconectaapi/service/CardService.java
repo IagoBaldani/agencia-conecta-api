@@ -5,9 +5,11 @@ import br.com.agenciaconectaapi.model.CardInformacao;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.repository.CardFinancasDao;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
+import br.com.agenciaconectaapi.repository.ServicoRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,15 +20,17 @@ import static br.com.agenciaconectaapi.util.Constantes.CARD_NAO_ENCONTRADO;
 public class CardService {
 
     private final InfluenciadorRepository influenciadorRepository;
+    private final ServicoRepository servicoRepository;
     private final CardFinancasDao cardFinancasDao;
 
-    public CardService(InfluenciadorRepository influenciadorRepository, CardFinancasDao cardFinancasDao) {
+    public CardService(InfluenciadorRepository influenciadorRepository, ServicoRepository servicoRepository, CardFinancasDao cardFinancasDao) {
         this.influenciadorRepository = influenciadorRepository;
+        this.servicoRepository = servicoRepository;
         this.cardFinancasDao = cardFinancasDao;
     }
 
 
-    public HashMap<String, String> buscaInformacaoCards(String descricaoCardProcurado){
+    public HashMap<String, String> buscaInformacaoCardsInfluenciador(String descricaoCardProcurado){
         HashMap<String, String> map = new HashMap<>();
 
         if(descricaoCardProcurado.equals(CardInformacao.NUMERO_INFLUENCIADORES_ATIVOS.getDescricao())){
@@ -37,6 +41,22 @@ public class CardService {
         }
         else if(descricaoCardProcurado.equals(CardInformacao.INFLUENCIADOR_MAIS_RECENTE.getDescricao())){
             map.put("influencer_mais_recente", influenciadorRepository.findNomeInfluenciadorMaisRecente());
+        }
+        else {
+            throw new RuntimeException(CARD_NAO_ENCONTRADO);
+        }
+
+        return map;
+    }
+
+    public HashMap<String, BigDecimal> buscaInformacaoCardsFinancas(String descricaoCardProcurado, Integer mes, Integer ano){
+        HashMap<String, BigDecimal> map = new HashMap<>();
+
+        if(descricaoCardProcurado.equals("ganhos_acessor")){
+            map.put("ganhosAcessor", servicoRepository.findTotalGanhosAcessorPorMesAno(mes, ano));
+        }
+        else if(descricaoCardProcurado.equals("total_contratos")){
+            map.put("totalContratos", servicoRepository.findTotalContratosPorMesAno(mes, ano));
         }
         else {
             throw new RuntimeException(CARD_NAO_ENCONTRADO);

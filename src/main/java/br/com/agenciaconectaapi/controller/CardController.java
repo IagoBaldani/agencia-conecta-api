@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,8 +28,20 @@ public class CardController {
         this.cardService = cardService;
     }
 
+    @RequestMapping(value =  "/financa/totais", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RetornoDto> buscaCardsFinancas(@RequestParam(value = "informacao") String descricaoCardProcurado, @RequestParam(name = "mes") Integer mes, @RequestParam(name = "ano") Integer ano){
+        try{
+            HashMap<String, BigDecimal> map = cardService.buscaInformacaoCardsFinancas(descricaoCardProcurado, mes, ano);
+
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, map));
+        }
+        catch (Exception e){
+            return ExceptionCatcher.collect(e);
+        }
+    }
+
     @RequestMapping(value =  "/financa", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RetornoDto> buscaCardsFinancas(@RequestParam(name = "mes") Integer mes, @RequestParam(name = "ano") Integer ano){
+    public ResponseEntity<RetornoDto> buscaCardsFinancasDescricao(@RequestParam(name = "mes") Integer mes, @RequestParam(name = "ano") Integer ano){
         try{
             List<CardFinancas> cardsFinancas = cardService.buscaCardsFinancas(mes, ano);
 
@@ -42,7 +55,7 @@ public class CardController {
     @RequestMapping(value = "/influenciador",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RetornoDto> buscaCardsInformacao(@RequestParam(value = "informacao") String descricaoCardProcurado){
         try{
-            HashMap<String, String> map = cardService.buscaInformacaoCards(descricaoCardProcurado);
+            HashMap<String, String> map = cardService.buscaInformacaoCardsInfluenciador(descricaoCardProcurado);
 
             return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, map));
         }
