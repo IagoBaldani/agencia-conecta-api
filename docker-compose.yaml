@@ -1,0 +1,15 @@
+services:
+  api:
+    image: agencia-conecta-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    command: [ "sh", "-c", "until nc -z mariadb_container 3306; do echo 'Waiting for MariaDB'; sleep 2; done; java -jar /app/app.jar" ]
+  db:
+    image: mariadb:latest
+    container_name: mariadb_container
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: admin
+      MARIADB_DATABASE: agencia_conecta

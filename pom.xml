@@ -10,7 +10,7 @@
     </parent>
     <groupId>br.com</groupId>
     <artifactId>agencia-conecta-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>agencia-conecta-api</name>
     <description>agencia-conecta-api</description>
     <properties>
