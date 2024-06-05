@@ -9,6 +9,7 @@ RUN mvn clean install
 FROM openjdk:17-alpine
 
 ENV JWT_SECRET=agencia_conecta_api_240218
+ENV FRONTEND_URL=http://localhost:4200
 
 COPY --from=build /app/target/agencia-conecta-api-1.0.0-SNAPSHOT.jar /app/app.jar
 

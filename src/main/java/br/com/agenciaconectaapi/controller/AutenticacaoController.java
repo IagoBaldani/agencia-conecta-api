@@ -5,16 +5,14 @@ import br.com.agenciaconectaapi.dto.RetornoDto;
 import br.com.agenciaconectaapi.dto.UsuarioDto;
 import br.com.agenciaconectaapi.exception.ExceptionCatcher;
 import br.com.agenciaconectaapi.model.Usuario;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static br.com.agenciaconectaapi.util.Constantes.*;
 
