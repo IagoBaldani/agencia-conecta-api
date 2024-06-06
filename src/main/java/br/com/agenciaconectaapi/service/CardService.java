@@ -30,42 +30,26 @@ public class CardService {
     }
 
 
-    public HashMap<String, String> buscaInformacaoCardsInfluenciador(String descricaoCardProcurado){
+    public HashMap<String, String> buscaInformacaoCardsInfluenciador() {
         HashMap<String, String> map = new HashMap<>();
 
-        if(descricaoCardProcurado.equals(CardInformacao.NUMERO_INFLUENCIADORES_ATIVOS.getDescricao())){
-            map.put("qtd_ativos", influenciadorRepository.getNumeroInfluenciadoresAtivos());
-        }
-        else if(descricaoCardProcurado.equals(CardInformacao.INFLUENCIADOR_MAIS_ANTIGO.getDescricao())){
-            map.put("influencer_mais_antigo", influenciadorRepository.findNomeInfluenciadorMaisAntigo());
-        }
-        else if(descricaoCardProcurado.equals(CardInformacao.INFLUENCIADOR_MAIS_RECENTE.getDescricao())){
-            map.put("influencer_mais_recente", influenciadorRepository.findNomeInfluenciadorMaisRecente());
-        }
-        else {
-            throw new RuntimeException(CARD_NAO_ENCONTRADO);
-        }
+        map.put("qtd_ativos", influenciadorRepository.getNumeroInfluenciadoresAtivos());
+        map.put("influencer_mais_antigo", influenciadorRepository.findNomeInfluenciadorMaisAntigo());
+        map.put("influencer_mais_recente", influenciadorRepository.findNomeInfluenciadorMaisRecente());
 
         return map;
     }
 
-    public HashMap<String, BigDecimal> buscaInformacaoCardsFinancas(String descricaoCardProcurado, Integer mes, Integer ano){
+    public HashMap<String, BigDecimal> buscaInformacaoCardsFinancas(Integer mes, Integer ano) {
         HashMap<String, BigDecimal> map = new HashMap<>();
 
-        if(descricaoCardProcurado.equals("ganhos_acessor")){
-            map.put("ganhosAcessor", servicoRepository.findTotalGanhosAcessorPorMesAno(mes, ano));
-        }
-        else if(descricaoCardProcurado.equals("total_contratos")){
-            map.put("totalContratos", servicoRepository.findTotalContratosPorMesAno(mes, ano));
-        }
-        else {
-            throw new RuntimeException(CARD_NAO_ENCONTRADO);
-        }
+        map.put("ganhosAcessor", servicoRepository.findTotalGanhosAcessorPorMesAno(mes, ano));
+        map.put("totalContratos", servicoRepository.findTotalContratosPorMesAno(mes, ano));
 
         return map;
     }
 
-    public List<CardFinancas> buscaCardsFinancas(Integer mes, Integer ano){
+    public List<CardFinancas> buscaCardsFinancas(Integer mes, Integer ano) {
         List<Influenciador> listaInfluenciadores = influenciadorRepository.findAll();
 
         List<CardFinancas> listaCards = new ArrayList<>();
@@ -75,10 +59,10 @@ public class CardService {
             CardFinancas cardFinancas = null;
             try {
                 cardFinancas = cardFinancasDao.findCardFinancasPorInfluenciadorMesEAno(influenciador.getId(), mes, ano);
+            } catch (EmptyResultDataAccessException ignored) {
             }
-            catch (EmptyResultDataAccessException ignored) {}
 
-            if(cardFinancas != null){
+            if (cardFinancas != null) {
                 listaCards.add(cardFinancas);
             }
         }

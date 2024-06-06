@@ -29,9 +29,9 @@ public class CardController {
     }
 
     @RequestMapping(value =  "/financa/totais", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RetornoDto> buscaCardsFinancas(@RequestParam(value = "informacao") String descricaoCardProcurado, @RequestParam(name = "mes") Integer mes, @RequestParam(name = "ano") Integer ano){
+    public ResponseEntity<RetornoDto> buscaCardsFinancas(@RequestParam(name = "mes") Integer mes, @RequestParam(name = "ano") Integer ano){
         try{
-            HashMap<String, BigDecimal> map = cardService.buscaInformacaoCardsFinancas(descricaoCardProcurado, mes, ano);
+            HashMap<String, BigDecimal> map = cardService.buscaInformacaoCardsFinancas(mes, ano);
 
             return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, map));
         }
@@ -53,9 +53,9 @@ public class CardController {
     }
 
     @RequestMapping(value = "/influenciador",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RetornoDto> buscaCardsInformacao(@RequestParam(value = "informacao") String descricaoCardProcurado){
+    public ResponseEntity<RetornoDto> buscaCardsInformacao(){
         try{
-            HashMap<String, String> map = cardService.buscaInformacaoCardsInfluenciador(descricaoCardProcurado);
+            HashMap<String, String> map = cardService.buscaInformacaoCardsInfluenciador();
 
             return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, map));
         }
