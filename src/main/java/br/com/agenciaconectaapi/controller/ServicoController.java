@@ -16,7 +16,7 @@ import java.util.List;
 import static br.com.agenciaconectaapi.util.Constantes.*;
 
 @RestController
-@RequestMapping("servico")
+@RequestMapping("/api/servico")
 public class ServicoController {
 
     private final ServicoService servicoService;

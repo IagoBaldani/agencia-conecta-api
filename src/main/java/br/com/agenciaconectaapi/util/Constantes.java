@@ -9,6 +9,7 @@ public final class Constantes {
     public static final String CARD_NAO_ENCONTRADO = "Card não encontrado.";
     public static final String SERVICO_NAO_ENCONTRADO = "Servico não encontrado.";
     public static final String NENHUM_SERVICO_ENCONTRADO = "Nenhum servico cadastrado.";
+    public static final String USUARIO_NAO_ENCONTRADO = "Usuário inexistente ou senha inválida";
 
     /*Mensagens de sucesso*/
     public static final String INFLUENCIADOR_CRIADO= "Influencer criado com sucesso.";
@@ -22,4 +23,5 @@ public final class Constantes {
     public static final String SERVICO_DELETADO= "Servico deletado com sucesso.";
     public static final String BUSCA_CONCLUIDA= "Busca concluida com sucesso.";
     public static final String LOGIN_CONCLUIDO = "Login concluido com sucesso.";
+    public static final String TOKEN_VALIDADO = "Token validado com sucesso.";
 }

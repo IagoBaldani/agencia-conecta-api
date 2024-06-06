@@ -19,7 +19,7 @@ import java.util.List;
 import static br.com.agenciaconectaapi.util.Constantes.BUSCA_CONCLUIDA;
 
 @RestController
-@RequestMapping("/card")
+@RequestMapping("/api/card")
 public class CardController {
 
     private final CardService cardService;

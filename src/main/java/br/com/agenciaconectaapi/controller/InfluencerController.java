@@ -16,7 +16,7 @@ import java.util.List;
 import static br.com.agenciaconectaapi.util.Constantes.*;
 
 @RestController
-@RequestMapping("influenciador")
+@RequestMapping("/api/influenciador")
 public class InfluencerController {
 
     private final InfluenciadorService influenciadorService;
