@@ -1,7 +1,6 @@
 package br.com.agenciaconectaapi.service;
 
 import br.com.agenciaconectaapi.dto.CardFinancas;
-import br.com.agenciaconectaapi.model.CardInformacao;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.repository.CardFinancasDao;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
@@ -13,8 +12,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static br.com.agenciaconectaapi.util.Constantes.CARD_NAO_ENCONTRADO;
 
 @Service
 public class CardService {
@@ -33,9 +30,9 @@ public class CardService {
     public HashMap<String, String> buscaInformacaoCardsInfluenciador() {
         HashMap<String, String> map = new HashMap<>();
 
-        map.put("qtd_ativos", influenciadorRepository.getNumeroInfluenciadoresAtivos());
-        map.put("influencer_mais_antigo", influenciadorRepository.findNomeInfluenciadorMaisAntigo());
-        map.put("influencer_mais_recente", influenciadorRepository.findNomeInfluenciadorMaisRecente());
+        map.put("qtdInfluenciadoresAtivos", influenciadorRepository.getNumeroInfluenciadoresAtivos());
+        map.put("influenciadorMaisAntigo", influenciadorRepository.findNomeInfluenciadorMaisAntigo());
+        map.put("influenciadorMaisRecente", influenciadorRepository.findNomeInfluenciadorMaisRecente());
 
         return map;
     }
@@ -66,6 +63,8 @@ public class CardService {
                 listaCards.add(cardFinancas);
             }
         }
+
+        listaCards.sort((card1, card2) -> Integer.compare(card2.qtdServicos(),card1.qtdServicos()));
 
         return listaCards;
     }

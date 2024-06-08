@@ -15,9 +15,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Objects;
-
 import static br.com.agenciaconectaapi.util.Constantes.*;
 
 @RestController
