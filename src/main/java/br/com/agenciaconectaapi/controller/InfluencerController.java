@@ -38,9 +38,9 @@ public class InfluencerController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RetornoDto> buscarTodosInfluenciadores(){
+    public ResponseEntity<RetornoDto> buscarTodosInfluenciadores(@RequestParam(name = "buscaSimplificada") boolean isBuscaSimplificada){
         try {
-            List<Influenciador> todosInfluenciadores = influenciadorService.buscaTodosInfluenciadores();
+            List<?> todosInfluenciadores = influenciadorService.buscaTodosInfluenciadores(isBuscaSimplificada);
 
             return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, todosInfluenciadores));
         }

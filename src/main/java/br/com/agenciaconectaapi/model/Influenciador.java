@@ -1,6 +1,7 @@
 package br.com.agenciaconectaapi.model;
 
 import br.com.agenciaconectaapi.dto.InfluenciadorDto;
+import br.com.agenciaconectaapi.dto.InfluenciadorSimplificadoDto;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;

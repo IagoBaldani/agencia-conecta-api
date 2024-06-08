@@ -1,10 +1,13 @@
 package br.com.agenciaconectaapi.service;
 
 import br.com.agenciaconectaapi.dto.InfluenciadorDto;
+import br.com.agenciaconectaapi.dto.InfluenciadorSimplificadoDto;
 import br.com.agenciaconectaapi.exception.InfluenciadorJaExisteException;
 import br.com.agenciaconectaapi.exception.InfluenciadorNaoEncontradoException;
 import br.com.agenciaconectaapi.model.Influenciador;
+import br.com.agenciaconectaapi.repository.InfluenciadorProjection;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,9 +31,27 @@ public class InfluenciadorService {
         return optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
     }
 
-    public List<Influenciador> buscaTodosInfluenciadores(){
+    public List<?> buscaTodosInfluenciadores(boolean buscaSimplificada){
+        List<?> todosInfluencers;
 
-        List<Influenciador> todosInfluencers = influenciadorRepository.findAll();
+        if(buscaSimplificada){
+            List<InfluenciadorProjection> projections = influenciadorRepository.findAllProjectedBy();
+            List<InfluenciadorSimplificadoDto> listaInfluenciadorSimplificado = new ArrayList<>();
+
+            projections.forEach(projection -> {
+                InfluenciadorSimplificadoDto influenciadorSimplificadoDto = new InfluenciadorSimplificadoDto(projection.getId(),
+                        projection.getNome(),
+                        projection.getCidadeEstado(),
+                        projection.getAtivo());
+
+                listaInfluenciadorSimplificado.add(influenciadorSimplificadoDto);
+            });
+
+            todosInfluencers = listaInfluenciadorSimplificado;
+        }
+        else{
+            todosInfluencers = influenciadorRepository.findAll();
+        }
 
         if(todosInfluencers.isEmpty()){
             throw new InfluenciadorNaoEncontradoException(NENHUM_INFLUENCIADOR_ENCONTRADO);
@@ -97,7 +118,4 @@ public class InfluenciadorService {
 
         return influenciadorRepository.save(influenciador);
     }
-
-
-
 }
