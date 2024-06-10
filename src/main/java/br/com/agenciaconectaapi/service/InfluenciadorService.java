@@ -8,6 +8,7 @@ import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.repository.InfluenciadorProjection;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
 import org.checkerframework.checker.units.qual.A;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -103,9 +104,15 @@ public class InfluenciadorService {
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(idInfluenciador);
 
         optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
-        influenciadorRepository.delete(optInfluenciador.get());
 
-        return optInfluenciador.get();
+        try {
+            influenciadorRepository.delete(optInfluenciador.get());
+
+            return optInfluenciador.get();
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new RuntimeException(INFLUENCIADOR_COM_SERVICO);
+        }
     }
 
     public Influenciador atualizarInfluenciador(InfluenciadorDto influenciadorDto, Integer id){
