@@ -115,6 +115,7 @@ public class InfluenciadorService {
 
         Influenciador influenciador = new Influenciador(influenciadorDto);
         influenciador.setId(id);
+        influenciador.setAtivo(optInfluenciador.get().isAtivo());
 
         return influenciadorRepository.save(influenciador);
     }
