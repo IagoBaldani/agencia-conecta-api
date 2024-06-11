@@ -14,6 +14,8 @@ public interface InfluenciadorRepository extends JpaRepository<Influenciador, In
 
     List<InfluenciadorProjection> findAllProjectedBy();
 
+    List<InfluenciadorProjection> findAllProjectedByAtivoIs(boolean ativo);
+
     @Query("SELECT i.nome FROM Influenciador i ORDER BY i.dataContrato ASC LIMIT 1")
     String findNomeInfluenciadorMaisAntigo();
 

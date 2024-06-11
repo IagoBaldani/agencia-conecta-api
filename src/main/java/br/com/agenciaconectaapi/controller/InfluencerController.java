@@ -1,6 +1,7 @@
 package br.com.agenciaconectaapi.controller;
 
 import br.com.agenciaconectaapi.dto.InfluenciadorDto;
+import br.com.agenciaconectaapi.dto.InfluenciadorSimplificadoDto;
 import br.com.agenciaconectaapi.dto.RetornoDto;
 import br.com.agenciaconectaapi.exception.ExceptionCatcher;
 import br.com.agenciaconectaapi.model.Influenciador;
@@ -31,6 +32,18 @@ public class InfluencerController {
             Influenciador influenciador = influenciadorService.buscarInfluenciadorPorId(id);
 
             return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, influenciador));
+        }
+        catch (Exception e) {
+            return ExceptionCatcher.collect(e);
+        }
+    }
+
+    @RequestMapping(value = "/status", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RetornoDto> buscarTodosInfluenciadoresPorStatus(@RequestParam(name = "ativos") boolean ativos){
+        try {
+            List<InfluenciadorSimplificadoDto> todosInfluenciadores = influenciadorService.buscarInfluenciadoresPorStatus(ativos);
+
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, todosInfluenciadores));
         }
         catch (Exception e) {
             return ExceptionCatcher.collect(e);

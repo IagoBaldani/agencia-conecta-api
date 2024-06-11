@@ -32,23 +32,25 @@ public class InfluenciadorService {
         return optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
     }
 
+    public List<InfluenciadorSimplificadoDto> buscarInfluenciadoresPorStatus(boolean ativos){
+        List<InfluenciadorProjection> projections = influenciadorRepository.findAllProjectedByAtivoIs(ativos);
+
+        List<InfluenciadorSimplificadoDto> listInfluenciadorSimplificadoDto = fromProjectionToDto(projections);
+
+        if(listInfluenciadorSimplificadoDto.isEmpty()){
+            throw new InfluenciadorNaoEncontradoException(NENHUM_INFLUENCIADOR_ENCONTRADO);
+        }
+
+        return listInfluenciadorSimplificadoDto;
+    }
+
     public List<?> buscaTodosInfluenciadores(boolean buscaSimplificada){
         List<?> todosInfluencers;
 
         if(buscaSimplificada){
             List<InfluenciadorProjection> projections = influenciadorRepository.findAllProjectedBy();
-            List<InfluenciadorSimplificadoDto> listaInfluenciadorSimplificado = new ArrayList<>();
 
-            projections.forEach(projection -> {
-                InfluenciadorSimplificadoDto influenciadorSimplificadoDto = new InfluenciadorSimplificadoDto(projection.getId(),
-                        projection.getNome(),
-                        projection.getCidadeEstado(),
-                        projection.getAtivo());
-
-                listaInfluenciadorSimplificado.add(influenciadorSimplificadoDto);
-            });
-
-            todosInfluencers = listaInfluenciadorSimplificado;
+            todosInfluencers = fromProjectionToDto(projections);
         }
         else{
             todosInfluencers = influenciadorRepository.findAll();
@@ -125,5 +127,20 @@ public class InfluenciadorService {
         influenciador.setAtivo(optInfluenciador.get().isAtivo());
 
         return influenciadorRepository.save(influenciador);
+    }
+
+    private static List<InfluenciadorSimplificadoDto> fromProjectionToDto(List<InfluenciadorProjection> projections) {
+        List<InfluenciadorSimplificadoDto> listaInfluenciadorSimplificado = new ArrayList<>();
+
+        projections.forEach(projection -> {
+            InfluenciadorSimplificadoDto influenciadorSimplificadoDto = new InfluenciadorSimplificadoDto(projection.getId(),
+                    projection.getNome(),
+                    projection.getCidadeEstado(),
+                    projection.getAtivo());
+
+            listaInfluenciadorSimplificado.add(influenciadorSimplificadoDto);
+        });
+
+        return listaInfluenciadorSimplificado;
     }
 }
