@@ -11,8 +11,8 @@ import java.util.List;
 public interface ServicoRepository extends JpaRepository<Servico, Integer> {
 
     List<Servico> findAllByAtivoIs(boolean ativo);
-
     List<Servico> findAllByInfluenciadorOrderByAtivoDescDataFimAsc(Influenciador influenciador);
+    List<Servico> findAllByInfluenciadorAndAtivoIsOrderByAtivoDescDataFimAsc(Influenciador influenciador, boolean ativo);
 
     @Query("SELECT IFNULL(SUM(ROUND((porcentagem/100) * valor, 2)), 0) AS valorAcessor FROM Servico WHERE MONTH(dataFim) = ?1 AND YEAR(dataFim) = ?2")
     BigDecimal findTotalGanhosAcessorPorMesAno(Integer mes, Integer ano);

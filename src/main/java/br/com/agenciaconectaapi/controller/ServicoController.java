@@ -25,36 +25,22 @@ public class ServicoController {
         this.servicoService = servicoService;
     }
 
-    /*
-    @RequestMapping(name = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> buscaServicoPorId(@PathVariable(name = "id") Integer id){
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RetornoDto> buscaServicoPorId(@PathVariable(name = "id") Integer id){
         try{
             Servico servico = servicoService.buscaServicoPorId(id);
 
-            return ResponseEntity.status(HttpStatus.OK).body(servico);
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, servico));
         }
         catch (Exception e){
             return ExceptionCatcher.collect(e);
         }
     }
-    */
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RetornoDto> buscaTodosOsServicos(@RequestParam(name = "ativos") boolean ativos){
+    public ResponseEntity<RetornoDto> buscaTodosOsServicos(@RequestParam(name = "ativos", required = false) String ativos, @RequestParam(name = "idInfluenciador", required = false) Integer idInfluenciador){
         try{
-            List<Servico> servicos = servicoService.buscarTodosServicos(ativos);
-
-            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, servicos));
-        }
-        catch (Exception e){
-            return ExceptionCatcher.collect(e);
-        }
-    }
-
-    @RequestMapping(value = "/influenciador", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RetornoDto> buscaTodosOsServicosPorInfluenciador(@RequestParam(name = "id") Integer idInfluenciador){
-        try{
-            List<Servico> servicos = servicoService.buscarServicosPorInfluenciador(idInfluenciador);
+            List<Servico> servicos = servicoService.buscarTodosServicos(ativos, idInfluenciador);
 
             return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, servicos));
         }

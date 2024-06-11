@@ -10,6 +10,7 @@ import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
 import br.com.agenciaconectaapi.repository.ServicoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,23 +32,22 @@ public class ServicoService {
         return optionalServico.orElseThrow(() ->  new ServicoNaoEncontradoException(SERVICO_NAO_ENCONTRADO));
     }
 
-    public List<Servico> buscarTodosServicos(boolean ativos){
-        List<Servico> listServicos = servicoRepository.findAllByAtivoIs(ativos);
+    public List<Servico> buscarTodosServicos(String ativos, Integer idInfluenciador){
+        List<Servico> listServicos = new ArrayList<>();
 
-        if(listServicos.isEmpty()){
-            throw new ServicoNaoEncontradoException(NENHUM_SERVICO_ENCONTRADO);
+        if(ativos != null && idInfluenciador == null){
+            listServicos = servicoRepository.findAllByAtivoIs(ativos.equals("true"));
         }
+        else if(idInfluenciador != null && ativos == null){
+            Influenciador influenciador = this.buscaInfluenciador(idInfluenciador);
 
-        return listServicos;
-    }
+            listServicos = servicoRepository.findAllByInfluenciadorOrderByAtivoDescDataFimAsc(influenciador);
+        }
+        else if(idInfluenciador != null && ativos != null){
+            Influenciador influenciador = this.buscaInfluenciador(idInfluenciador);
 
-    public List<Servico> buscarServicosPorInfluenciador(Integer id){
-        Optional<Influenciador> optionalInfluenciador = influenciadorRepository.findById(id);
-
-        Influenciador influenciador = optionalInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
-
-
-        List<Servico> listServicos = servicoRepository.findAllByInfluenciadorOrderByAtivoDescDataFimAsc(influenciador);
+            listServicos = servicoRepository.findAllByInfluenciadorAndAtivoIsOrderByAtivoDescDataFimAsc(influenciador, ativos.equals("true"));
+        }
 
         if(listServicos.isEmpty()){
             throw new ServicoNaoEncontradoException(NENHUM_SERVICO_ENCONTRADO);
@@ -100,5 +100,11 @@ public class ServicoService {
         servicoRepository.delete(servico);
 
         return servico;
+    }
+
+    private Influenciador buscaInfluenciador(Integer id){
+        Optional<Influenciador> optionalInfluenciador = influenciadorRepository.findById(id);
+
+        return optionalInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
     }
 }

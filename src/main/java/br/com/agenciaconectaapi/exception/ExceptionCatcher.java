@@ -16,7 +16,8 @@ public class ExceptionCatcher {
         RetornoDto retornoDto = new RetornoDto(e.getMessage(), e.getClass());
         LOGGER.trace(e.getMessage(), e);
 
-        if(e.getClass() == InfluenciadorJaExisteException.class || e.getClass() == InfluenciadorNaoEncontradoException.class){
+        if(e.getClass() == InfluenciadorJaExisteException.class || e.getClass() == InfluenciadorNaoEncontradoException.class
+                || e.getClass() == ServicoNaoEncontradoException.class){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(retornoDto);
         }
         if(e.getClass() == BadCredentialsException.class){
