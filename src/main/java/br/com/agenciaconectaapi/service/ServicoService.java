@@ -83,6 +83,7 @@ public class ServicoService {
 
         Servico servico = new Servico(servicoDto);
         servico.setId(id);
+        servico.setAtivo(optionalServico.get().isAtivo());
 
         Optional<Influenciador> optionalInfluenciador = influenciadorRepository.findById(servicoDto.getInfluenciadorId());
         Influenciador influenciador = optionalInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
