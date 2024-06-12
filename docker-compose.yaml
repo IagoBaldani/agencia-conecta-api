@@ -13,3 +13,9 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD: admin
       MARIADB_DATABASE: agencia_conecta
+  frontend:
+    image: agencia-conecta-frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - api
