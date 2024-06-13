@@ -20,7 +20,9 @@ public class InfluenciadorDto {
     private String email;
     private String endereco;
     @NotNull
-    private LocalDate dataContrato;
+    private LocalDate dataAssinaturaContrato;
+    @NotNull
+    private LocalDate dataVencimentoContrato;
     @NotNull
     private LocalDate dataNascimento;
     @NotNull
@@ -70,11 +72,18 @@ public class InfluenciadorDto {
         this.endereco = endereco;
     }
 
-    public LocalDate getDataContrato() {
-        return dataContrato;
+    public LocalDate getDataAssinaturaContrato() {
+        return dataAssinaturaContrato;
     }
-    public void setDataContrato(LocalDate dataContrato) {
-        this.dataContrato = dataContrato;
+    public void setDataAssinaturaContrato(LocalDate dataAssinaturaContrato) {
+        this.dataAssinaturaContrato = dataAssinaturaContrato;
+    }
+
+    public LocalDate getDataVencimentoContrato() {
+        return dataVencimentoContrato;
+    }
+    public void setDataVencimentoContrato(LocalDate dataVencimentoContrato) {
+        this.dataVencimentoContrato = dataVencimentoContrato;
     }
 
     public LocalDate getDataNascimento() {
@@ -112,32 +121,55 @@ public class InfluenciadorDto {
 
         InfluenciadorDto that = (InfluenciadorDto) o;
 
-        if (!nome.equals(that.nome)) return false;
-        if (!cpf.equals(that.cpf)) return false;
-        if (!celular.equals(that.celular)) return false;
-        if (!cidadeEstado.equals(that.cidadeEstado)) return false;
+        if (!Objects.equals(nome, that.nome)) return false;
+        if (!Objects.equals(cpf, that.cpf)) return false;
+        if (!Objects.equals(celular, that.celular)) return false;
+        if (!Objects.equals(cidadeEstado, that.cidadeEstado)) return false;
         if (!Objects.equals(email, that.email)) return false;
         if (!Objects.equals(endereco, that.endereco)) return false;
-        if (!dataContrato.equals(that.dataContrato)) return false;
-        if (!dataNascimento.equals(that.dataNascimento)) return false;
-        if (!instagram.equals(that.instagram)) return false;
-        if (!tiktok.equals(that.tiktok)) return false;
-        return youtube.equals(that.youtube);
+        if (!Objects.equals(dataAssinaturaContrato, that.dataAssinaturaContrato))
+            return false;
+        if (!Objects.equals(dataVencimentoContrato, that.dataVencimentoContrato))
+            return false;
+        if (!Objects.equals(dataNascimento, that.dataNascimento))
+            return false;
+        if (!Objects.equals(instagram, that.instagram)) return false;
+        if (!Objects.equals(tiktok, that.tiktok)) return false;
+        return Objects.equals(youtube, that.youtube);
     }
 
     @Override
     public int hashCode() {
-        int result = nome.hashCode();
-        result = 31 * result + cpf.hashCode();
-        result = 31 * result + celular.hashCode();
-        result = 31 * result + cidadeEstado.hashCode();
+        int result = nome != null ? nome.hashCode() : 0;
+        result = 31 * result + (cpf != null ? cpf.hashCode() : 0);
+        result = 31 * result + (celular != null ? celular.hashCode() : 0);
+        result = 31 * result + (cidadeEstado != null ? cidadeEstado.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (endereco != null ? endereco.hashCode() : 0);
-        result = 31 * result + dataContrato.hashCode();
-        result = 31 * result + dataNascimento.hashCode();
-        result = 31 * result + instagram.hashCode();
-        result = 31 * result + tiktok.hashCode();
-        result = 31 * result + youtube.hashCode();
+        result = 31 * result + (dataAssinaturaContrato != null ? dataAssinaturaContrato.hashCode() : 0);
+        result = 31 * result + (dataVencimentoContrato != null ? dataVencimentoContrato.hashCode() : 0);
+        result = 31 * result + (dataNascimento != null ? dataNascimento.hashCode() : 0);
+        result = 31 * result + (instagram != null ? instagram.hashCode() : 0);
+        result = 31 * result + (tiktok != null ? tiktok.hashCode() : 0);
+        result = 31 * result + (youtube != null ? youtube.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "InfluenciadorDto{" +
+                "nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", celular='" + celular + '\'' +
+                ", cidadeEstado='" + cidadeEstado + '\'' +
+                ", email='" + email + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", dataAssinaturaContrato=" + dataAssinaturaContrato +
+                ", dataVencimentoContrato=" + dataVencimentoContrato +
+                ", dataNascimento=" + dataNascimento +
+                ", instagram='" + instagram + '\'' +
+                ", tiktok='" + tiktok + '\'' +
+                ", youtube='" + youtube + '\'' +
+                '}';
     }
 }

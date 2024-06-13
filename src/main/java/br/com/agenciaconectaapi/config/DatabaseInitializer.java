@@ -21,11 +21,9 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Verifica se o banco de dados está vazio
         Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM usuarios", Integer.class);
 
         if (count == null || count == 0) {
-            // Se estiver vazio, execute os scripts SQL
             ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
             resourceDatabasePopulator.addScript(new ClassPathResource("init-db-agencia_conecta.sql"));
             resourceDatabasePopulator.execute(dataSource);
