@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="iago_baldani">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="influenciadores" columnName="data_assinatura_contrato"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="influenciadores">
+            <column name="data_assinatura_contrato" type="date"/>
+        </addColumn>
+
+        <sql>
+            UPDATE influenciadores
+            SET data_assinatura_contrato = data_contrato;
+        </sql>
+
+        <dropColumn tableName="influenciadores" columnName="data_contrato"/>
+    </changeSet>
+</databaseChangeLog>
