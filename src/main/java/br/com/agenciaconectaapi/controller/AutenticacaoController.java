@@ -5,6 +5,7 @@ import br.com.agenciaconectaapi.dto.RetornoDto;
 import br.com.agenciaconectaapi.dto.UsuarioDto;
 import br.com.agenciaconectaapi.exception.ExceptionCatcher;
 import br.com.agenciaconectaapi.model.Usuario;
+import br.com.agenciaconectaapi.service.AutenticacaoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +19,33 @@ import org.springframework.web.bind.annotation.*;
 import static br.com.agenciaconectaapi.util.Constantes.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 public class AutenticacaoController {
 
     private final AuthenticationManager manager;
     private final TokenService tokenService;
 
-    public AutenticacaoController(AuthenticationManager manager, TokenService tokenService) {
+    private final AutenticacaoService autenticacaoService;
+
+    public AutenticacaoController(AuthenticationManager manager, TokenService tokenService, AutenticacaoService autenticacaoService) {
         this.manager = manager;
         this.tokenService = tokenService;
+        this.autenticacaoService = autenticacaoService;
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/usuario", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RetornoDto> criarUsuario(@RequestBody UsuarioDto usuarioDto){
+        try {
+            UsuarioDto usuarioCriado = autenticacaoService.criarUsuario(usuarioDto);
+
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(USUARIO_CRIADO, usuarioCriado));
+        }
+        catch (Exception e) {
+            return ExceptionCatcher.collect(e);
+        }
+    }
+
+    @RequestMapping(value = "/auth", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RetornoDto> efetuarLogin(@RequestBody UsuarioDto usuarioDto){
         try {
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(usuarioDto.login(), usuarioDto.senha());
@@ -49,7 +65,7 @@ public class AutenticacaoController {
         }
     }
 
-    @RequestMapping(value = "/{token}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/auth/{token}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RetornoDto> validarToken(@PathVariable(value = "token") String token){
         try {
             tokenService.validarTokenERetornarSubject(token);

@@ -38,6 +38,7 @@ public class Influenciador{
         this.email = influenciadorDto.getEmail();
         this.endereco = influenciadorDto.getEndereco();
         this.dataAssinaturaContrato = influenciadorDto.getDataAssinaturaContrato();
+        this.dataVencimentoContrato = influenciadorDto.getDataVencimentoContrato();
         this.dataNascimento = influenciadorDto.getDataNascimento();
         this.instagram = influenciadorDto.getInstagram();
         this.tiktok = influenciadorDto.getTiktok();

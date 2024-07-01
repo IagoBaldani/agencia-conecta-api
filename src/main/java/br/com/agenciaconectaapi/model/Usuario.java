@@ -1,5 +1,6 @@
 package br.com.agenciaconectaapi.model;
 
+import br.com.agenciaconectaapi.dto.UsuarioDto;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,10 +16,18 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(unique = true, nullable = false)
     private String login;
+
     private String senha;
 
     public Usuario() {
+    }
+
+    public Usuario(UsuarioDto usuarioDto) {
+        this.login = usuarioDto.login();
+        this.senha = usuarioDto.senha();
     }
 
     public Usuario(Integer id, String login, String senha) {
