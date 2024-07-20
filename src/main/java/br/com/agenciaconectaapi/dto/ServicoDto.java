@@ -33,6 +33,8 @@ public class ServicoDto {
     private boolean impulsionamento;
     @NotNull
     private boolean exclusividade;
+    @NotNull
+    private boolean declaravel;
 
     public ServicoDto() {
     }
@@ -128,6 +130,13 @@ public class ServicoDto {
         this.exclusividade = exclusividade;
     }
 
+    public boolean isDeclaravel() {
+        return declaravel;
+    }
+    public void setDeclaravel(boolean declaravel) {
+        this.declaravel = declaravel;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -138,53 +147,39 @@ public class ServicoDto {
         if (usoImagem != that.usoImagem) return false;
         if (impulsionamento != that.impulsionamento) return false;
         if (exclusividade != that.exclusividade) return false;
-        if (!nomeContratante.equals(that.nomeContratante)) return false;
-        if (!influenciadorId.equals(that.influenciadorId)) return false;
-        if (!celularContratante.equals(that.celularContratante)) return false;
+        if (declaravel != that.declaravel) return false;
+        if (!Objects.equals(nomeContratante, that.nomeContratante))
+            return false;
+        if (!Objects.equals(influenciadorId, that.influenciadorId))
+            return false;
+        if (!Objects.equals(celularContratante, that.celularContratante))
+            return false;
         if (!Objects.equals(emailContratante, that.emailContratante))
             return false;
-        if (!proposta.equals(that.proposta)) return false;
-        if (!dataInicio.equals(that.dataInicio)) return false;
-        if (!dataFim.equals(that.dataFim)) return false;
-        if (!porcentagem.equals(that.porcentagem)) return false;
-        if (!valor.equals(that.valor)) return false;
-        return descricaoTipoPagamento.equals(that.descricaoTipoPagamento);
+        if (!Objects.equals(proposta, that.proposta)) return false;
+        if (!Objects.equals(dataInicio, that.dataInicio)) return false;
+        if (!Objects.equals(dataFim, that.dataFim)) return false;
+        if (!Objects.equals(porcentagem, that.porcentagem)) return false;
+        if (!Objects.equals(valor, that.valor)) return false;
+        return Objects.equals(descricaoTipoPagamento, that.descricaoTipoPagamento);
     }
 
     @Override
     public int hashCode() {
-        int result = nomeContratante.hashCode();
-        result = 31 * result + influenciadorId.hashCode();
-        result = 31 * result + celularContratante.hashCode();
+        int result = nomeContratante != null ? nomeContratante.hashCode() : 0;
+        result = 31 * result + (influenciadorId != null ? influenciadorId.hashCode() : 0);
+        result = 31 * result + (celularContratante != null ? celularContratante.hashCode() : 0);
         result = 31 * result + (emailContratante != null ? emailContratante.hashCode() : 0);
-        result = 31 * result + proposta.hashCode();
-        result = 31 * result + dataInicio.hashCode();
-        result = 31 * result + dataFim.hashCode();
-        result = 31 * result + porcentagem.hashCode();
-        result = 31 * result + valor.hashCode();
-        result = 31 * result + descricaoTipoPagamento.hashCode();
+        result = 31 * result + (proposta != null ? proposta.hashCode() : 0);
+        result = 31 * result + (dataInicio != null ? dataInicio.hashCode() : 0);
+        result = 31 * result + (dataFim != null ? dataFim.hashCode() : 0);
+        result = 31 * result + (porcentagem != null ? porcentagem.hashCode() : 0);
+        result = 31 * result + (valor != null ? valor.hashCode() : 0);
+        result = 31 * result + (descricaoTipoPagamento != null ? descricaoTipoPagamento.hashCode() : 0);
         result = 31 * result + (usoImagem ? 1 : 0);
         result = 31 * result + (impulsionamento ? 1 : 0);
         result = 31 * result + (exclusividade ? 1 : 0);
+        result = 31 * result + (declaravel ? 1 : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "ServicoDto{" +
-                "nomeContratante='" + nomeContratante + '\'' +
-                ", influenciadorId=" + influenciadorId +
-                ", celularContratante='" + celularContratante + '\'' +
-                ", emailContratante='" + emailContratante + '\'' +
-                ", proposta='" + proposta + '\'' +
-                ", dataInicio=" + dataInicio +
-                ", dataFim=" + dataFim +
-                ", porcentagem=" + porcentagem +
-                ", valor=" + valor +
-                ", descricaoTipoPagamento='" + descricaoTipoPagamento + '\'' +
-                ", usoImagem=" + usoImagem +
-                ", impulsionamento=" + impulsionamento +
-                ", exclusividade=" + exclusividade +
-                '}';
     }
 }

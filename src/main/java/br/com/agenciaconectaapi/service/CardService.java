@@ -41,7 +41,8 @@ public class CardService {
     public HashMap<String, BigDecimal> buscaInformacaoCardsFinancas(Integer mes, Integer ano) {
         HashMap<String, BigDecimal> map = new HashMap<>();
 
-        map.put("ganhosAcessor", servicoRepository.findTotalGanhosAcessorPorMesAno(mes, ano));
+        map.put("ganhosAcessorDeclaravel", servicoRepository.findTotalGanhosAcessorPorMesAno(mes, ano, true));
+        map.put("ganhosAcessorNaoDeclaravel", servicoRepository.findTotalGanhosAcessorPorMesAno(mes, ano, false));
         map.put("totalContratos", servicoRepository.findTotalContratosPorMesAno(mes, ano));
 
         return map;
@@ -57,8 +58,7 @@ public class CardService {
             CardFinancas cardFinancas = null;
             try {
                 cardFinancas = cardDao.findCardFinancasPorInfluenciadorMesEAno(influenciador.getId(), mes, ano);
-            } catch (EmptyResultDataAccessException ignored) {
-            }
+            } catch (EmptyResultDataAccessException ignored) {}
 
             if (cardFinancas != null) {
                 listaCards.add(cardFinancas);

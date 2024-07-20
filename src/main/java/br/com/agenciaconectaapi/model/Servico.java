@@ -30,6 +30,7 @@ public class Servico {
     private boolean impulsionamento;
     private boolean exclusividade;
     private boolean ativo;
+    private boolean declaravel;
 
     public Servico() {
     }
@@ -47,6 +48,7 @@ public class Servico {
         this.usoImagem = servicoDto.isUsoImagem();
         this.impulsionamento = servicoDto.isImpulsionamento();
         this.exclusividade = servicoDto.isExclusividade();
+        this.declaravel = servicoDto.isDeclaravel();
         this.ativo = true;
     }
 
@@ -148,6 +150,13 @@ public class Servico {
         this.exclusividade = exclusividade;
     }
 
+    public boolean isDeclaravel() {
+        return declaravel;
+    }
+    public void setDeclaravel(boolean declaravel) {
+        this.declaravel = declaravel;
+    }
+
     public boolean isAtivo() {
         return ativo;
     }
@@ -157,27 +166,6 @@ public class Servico {
 
     public void mudarStatus(){
         this.ativo = !this.ativo;
-    }
-
-    @Override
-    public String toString() {
-        return "Servico{" +
-                "id=" + id +
-                ", nomeContratante='" + nomeContratante + '\'' +
-                ", influenciador=" + influenciador +
-                ", celularContratante='" + celularContratante + '\'' +
-                ", emailContratante='" + emailContratante + '\'' +
-                ", proposta='" + proposta + '\'' +
-                ", dataInicio=" + dataInicio +
-                ", dataFim=" + dataFim +
-                ", porcentagem=" + porcentagem +
-                ", valor=" + valor +
-                ", descricaoTipoPagamento='" + descricaoTipoPagamento + '\'' +
-                ", usoImagem=" + usoImagem +
-                ", impulsionamento=" + impulsionamento +
-                ", exclusividade=" + exclusividade +
-                ", ativo=" + ativo +
-                '}';
     }
 
     @Override
@@ -191,37 +179,42 @@ public class Servico {
         if (impulsionamento != servico.impulsionamento) return false;
         if (exclusividade != servico.exclusividade) return false;
         if (ativo != servico.ativo) return false;
-        if (!id.equals(servico.id)) return false;
-        if (!nomeContratante.equals(servico.nomeContratante)) return false;
-        if (!influenciador.equals(servico.influenciador)) return false;
-        if (!celularContratante.equals(servico.celularContratante)) return false;
+        if (declaravel != servico.declaravel) return false;
+        if (!Objects.equals(id, servico.id)) return false;
+        if (!Objects.equals(nomeContratante, servico.nomeContratante))
+            return false;
+        if (!Objects.equals(influenciador, servico.influenciador))
+            return false;
+        if (!Objects.equals(celularContratante, servico.celularContratante))
+            return false;
         if (!Objects.equals(emailContratante, servico.emailContratante))
             return false;
-        if (!proposta.equals(servico.proposta)) return false;
-        if (!dataInicio.equals(servico.dataInicio)) return false;
-        if (!dataFim.equals(servico.dataFim)) return false;
-        if (!porcentagem.equals(servico.porcentagem)) return false;
-        if (!valor.equals(servico.valor)) return false;
-        return descricaoTipoPagamento.equals(servico.descricaoTipoPagamento);
+        if (!Objects.equals(proposta, servico.proposta)) return false;
+        if (!Objects.equals(dataInicio, servico.dataInicio)) return false;
+        if (!Objects.equals(dataFim, servico.dataFim)) return false;
+        if (!Objects.equals(porcentagem, servico.porcentagem)) return false;
+        if (!Objects.equals(valor, servico.valor)) return false;
+        return Objects.equals(descricaoTipoPagamento, servico.descricaoTipoPagamento);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + nomeContratante.hashCode();
-        result = 31 * result + influenciador.hashCode();
-        result = 31 * result + celularContratante.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (nomeContratante != null ? nomeContratante.hashCode() : 0);
+        result = 31 * result + (influenciador != null ? influenciador.hashCode() : 0);
+        result = 31 * result + (celularContratante != null ? celularContratante.hashCode() : 0);
         result = 31 * result + (emailContratante != null ? emailContratante.hashCode() : 0);
-        result = 31 * result + proposta.hashCode();
-        result = 31 * result + dataInicio.hashCode();
-        result = 31 * result + dataFim.hashCode();
-        result = 31 * result + porcentagem.hashCode();
-        result = 31 * result + valor.hashCode();
-        result = 31 * result + descricaoTipoPagamento.hashCode();
+        result = 31 * result + (proposta != null ? proposta.hashCode() : 0);
+        result = 31 * result + (dataInicio != null ? dataInicio.hashCode() : 0);
+        result = 31 * result + (dataFim != null ? dataFim.hashCode() : 0);
+        result = 31 * result + (porcentagem != null ? porcentagem.hashCode() : 0);
+        result = 31 * result + (valor != null ? valor.hashCode() : 0);
+        result = 31 * result + (descricaoTipoPagamento != null ? descricaoTipoPagamento.hashCode() : 0);
         result = 31 * result + (usoImagem ? 1 : 0);
         result = 31 * result + (impulsionamento ? 1 : 0);
         result = 31 * result + (exclusividade ? 1 : 0);
         result = 31 * result + (ativo ? 1 : 0);
+        result = 31 * result + (declaravel ? 1 : 0);
         return result;
     }
 }
