@@ -1,5 +1,6 @@
 package br.com.agenciaconectaapi.controller;
 
+import br.com.agenciaconectaapi.dto.CardDatas;
 import br.com.agenciaconectaapi.dto.CardFinancas;
 import br.com.agenciaconectaapi.dto.RetornoDto;
 import br.com.agenciaconectaapi.exception.ExceptionCatcher;
@@ -60,6 +61,30 @@ public class CardController {
             return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, map));
         }
         catch (Exception e){
+            return ExceptionCatcher.collect(e);
+        }
+    }
+
+    @RequestMapping(value="/aniversarios", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RetornoDto> buscaAniversariosProximos(){
+        try {
+            List<CardDatas> listaProximosAniversarios = cardService.buscarCardProximosAniversarios();
+
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, listaProximosAniversarios));
+        }
+        catch (Exception e) {
+            return ExceptionCatcher.collect(e);
+        }
+    }
+
+    @RequestMapping(value="/vencimentosContrato", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RetornoDto> buscaVencimentosContratoProximos(){
+        try {
+            List<CardDatas> listaProximosVencimentosContrato = cardService.buscarCardProximosVencimentosContrato();
+
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, listaProximosVencimentosContrato));
+        }
+        catch (Exception e) {
             return ExceptionCatcher.collect(e);
         }
     }

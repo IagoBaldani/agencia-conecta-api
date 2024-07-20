@@ -1,8 +1,9 @@
 package br.com.agenciaconectaapi.service;
 
+import br.com.agenciaconectaapi.dto.CardDatas;
 import br.com.agenciaconectaapi.dto.CardFinancas;
 import br.com.agenciaconectaapi.model.Influenciador;
-import br.com.agenciaconectaapi.repository.CardFinancasDao;
+import br.com.agenciaconectaapi.repository.CardDao;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
 import br.com.agenciaconectaapi.repository.ServicoRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,12 +19,12 @@ public class CardService {
 
     private final InfluenciadorRepository influenciadorRepository;
     private final ServicoRepository servicoRepository;
-    private final CardFinancasDao cardFinancasDao;
+    private final CardDao cardDao;
 
-    public CardService(InfluenciadorRepository influenciadorRepository, ServicoRepository servicoRepository, CardFinancasDao cardFinancasDao) {
+    public CardService(InfluenciadorRepository influenciadorRepository, ServicoRepository servicoRepository, CardDao cardDao) {
         this.influenciadorRepository = influenciadorRepository;
         this.servicoRepository = servicoRepository;
-        this.cardFinancasDao = cardFinancasDao;
+        this.cardDao = cardDao;
     }
 
 
@@ -55,7 +56,7 @@ public class CardService {
 
             CardFinancas cardFinancas = null;
             try {
-                cardFinancas = cardFinancasDao.findCardFinancasPorInfluenciadorMesEAno(influenciador.getId(), mes, ano);
+                cardFinancas = cardDao.findCardFinancasPorInfluenciadorMesEAno(influenciador.getId(), mes, ano);
             } catch (EmptyResultDataAccessException ignored) {
             }
 
@@ -69,4 +70,11 @@ public class CardService {
         return listaCards;
     }
 
+    public List<CardDatas> buscarCardProximosAniversarios(){
+        return cardDao.findCardProximosAniversarios();
+    }
+
+    public List<CardDatas> buscarCardProximosVencimentosContrato(){
+        return cardDao.findCardProximosVencimentosContrato();
+    }
 }
