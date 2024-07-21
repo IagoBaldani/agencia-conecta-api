@@ -6,16 +6,35 @@ services:
     depends_on:
       - db
     command: [ "sh", "-c", "until nc -z mariadb_container 3306; do echo 'Waiting for MariaDB'; sleep 2; done; java -jar /app/app.jar" ]
+    build:
+      context: .
+      args:
+        JWT_SECRET: ${API_JWT_SECRET}
+        FRONTEND_URL: ${API_FRONTEND_URL}
+    environment:
+        JWT_SECRET: ${API_JWT_SECRET}
+        FRONTEND_URL: ${API_FRONTEND_URL}
   db:
     image: mariadb:latest
     container_name: mariadb_container
     restart: always
     environment:
-      MARIADB_ROOT_PASSWORD: admin
-      MARIADB_DATABASE: agencia_conecta
+      MARIADB_ROOT_PASSWORD: ${DB_MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_MARIADB_DATABASE}
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - backup-data:/backup
+      - ./backup_and_run.sh:/usr/local/bin/backup_and_run.sh
+    stop_grace_period: 1m
+    command: /usr/local/bin/backup_and_run.sh
+
   frontend:
     image: agencia-conecta-frontend
     ports:
       - "4200:4200"
     depends_on:
       - api
+
+volumes:
+  mariadb-data:
+  backup-data:
