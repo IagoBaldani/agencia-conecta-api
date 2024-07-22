@@ -6,6 +6,7 @@ import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.repository.CardDao;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
 import br.com.agenciaconectaapi.repository.ServicoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class CardService {
 
     private final InfluenciadorRepository influenciadorRepository;
     private final ServicoRepository servicoRepository;
     private final CardDao cardDao;
-
-    public CardService(InfluenciadorRepository influenciadorRepository, ServicoRepository servicoRepository, CardDao cardDao) {
-        this.influenciadorRepository = influenciadorRepository;
-        this.servicoRepository = servicoRepository;
-        this.cardDao = cardDao;
-    }
 
 
     public HashMap<String, String> buscaInformacaoCardsInfluenciador() {

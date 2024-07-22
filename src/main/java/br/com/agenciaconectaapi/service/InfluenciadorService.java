@@ -7,7 +7,7 @@ import br.com.agenciaconectaapi.exception.InfluenciadorNaoEncontradoException;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.repository.InfluenciadorProjection;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
-import org.checkerframework.checker.units.qual.A;
+import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +18,11 @@ import java.util.Optional;
 import static br.com.agenciaconectaapi.util.Constantes.*;
 
 @Service
+@AllArgsConstructor
 public class InfluenciadorService {
 
     private final InfluenciadorRepository influenciadorRepository;
 
-    public InfluenciadorService(InfluenciadorRepository influenciadorRepository) {
-        this.influenciadorRepository = influenciadorRepository;
-    }
 
     public Influenciador buscarInfluenciadorPorId(Integer idInfluenciador){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(idInfluenciador);

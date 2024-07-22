@@ -8,6 +8,7 @@ import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.model.Servico;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
 import br.com.agenciaconectaapi.repository.ServicoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,14 +18,11 @@ import java.util.Optional;
 import static br.com.agenciaconectaapi.util.Constantes.*;
 
 @Service
+@AllArgsConstructor
 public class ServicoService {
+
     private final InfluenciadorRepository influenciadorRepository;
     private final ServicoRepository servicoRepository;
-
-    public ServicoService(ServicoRepository servicoRepository, InfluenciadorRepository influenciadorRepository) {
-        this.servicoRepository = servicoRepository;
-        this.influenciadorRepository = influenciadorRepository;
-    }
 
     public Servico buscaServicoPorId(Integer id){
         Optional<Servico> optionalServico = servicoRepository.findById(id);
