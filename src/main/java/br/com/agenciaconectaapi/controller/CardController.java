@@ -5,6 +5,7 @@ import br.com.agenciaconectaapi.dto.CardFinancas;
 import br.com.agenciaconectaapi.dto.RetornoDto;
 import br.com.agenciaconectaapi.exception.ExceptionCatcher;
 import br.com.agenciaconectaapi.service.CardService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +22,10 @@ import static br.com.agenciaconectaapi.util.Constantes.BUSCA_CONCLUIDA;
 
 @RestController
 @RequestMapping("/api/card")
+@AllArgsConstructor
 public class CardController {
 
     private final CardService cardService;
-
-    public CardController(CardService cardService) {
-        this.cardService = cardService;
-    }
 
     @RequestMapping(value =  "/financa/totais", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RetornoDto> buscaCardsFinancas(@RequestParam(name = "mes") Integer mes, @RequestParam(name = "ano") Integer ano){

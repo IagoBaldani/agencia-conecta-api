@@ -6,6 +6,7 @@ import br.com.agenciaconectaapi.dto.UsuarioDto;
 import br.com.agenciaconectaapi.exception.ExceptionCatcher;
 import br.com.agenciaconectaapi.model.Usuario;
 import br.com.agenciaconectaapi.service.AutenticacaoService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,18 +21,13 @@ import static br.com.agenciaconectaapi.util.Constantes.*;
 
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class AutenticacaoController {
 
     private final AuthenticationManager manager;
     private final TokenService tokenService;
 
     private final AutenticacaoService autenticacaoService;
-
-    public AutenticacaoController(AuthenticationManager manager, TokenService tokenService, AutenticacaoService autenticacaoService) {
-        this.manager = manager;
-        this.tokenService = tokenService;
-        this.autenticacaoService = autenticacaoService;
-    }
 
     @RequestMapping(value = "/usuario", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RetornoDto> criarUsuario(@RequestBody UsuarioDto usuarioDto){
@@ -49,7 +45,7 @@ public class AutenticacaoController {
     public ResponseEntity<RetornoDto> efetuarLogin(@RequestBody UsuarioDto usuarioDto){
         try {
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(usuarioDto.login(), usuarioDto.senha());
-            Authentication authentication = null;
+            Authentication authentication;
             try {
                 authentication = manager.authenticate(authToken);
             } catch (InternalAuthenticationServiceException e) {

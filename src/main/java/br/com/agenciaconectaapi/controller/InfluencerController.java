@@ -7,6 +7,7 @@ import br.com.agenciaconectaapi.exception.ExceptionCatcher;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.service.InfluenciadorService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +19,10 @@ import static br.com.agenciaconectaapi.util.Constantes.*;
 
 @RestController
 @RequestMapping("/api/influenciador")
+@AllArgsConstructor
 public class InfluencerController {
 
     private final InfluenciadorService influenciadorService;
-
-    public InfluencerController(InfluenciadorService influenciadorService) {
-        this.influenciadorService = influenciadorService;
-    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RetornoDto> buscarInfluenciador(@PathVariable(name = "id") Integer id){

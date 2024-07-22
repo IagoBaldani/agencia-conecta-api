@@ -6,6 +6,7 @@ import br.com.agenciaconectaapi.exception.ExceptionCatcher;
 import br.com.agenciaconectaapi.model.Servico;
 import br.com.agenciaconectaapi.service.ServicoService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,10 @@ import static br.com.agenciaconectaapi.util.Constantes.*;
 
 @RestController
 @RequestMapping("/api/servico")
+@AllArgsConstructor
 public class ServicoController {
 
     private final ServicoService servicoService;
-
-    public ServicoController(ServicoService servicoService) {
-        this.servicoService = servicoService;
-    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RetornoDto> buscaServicoPorId(@PathVariable(name = "id") Integer id){
