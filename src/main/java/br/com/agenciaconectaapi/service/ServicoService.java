@@ -2,8 +2,8 @@ package br.com.agenciaconectaapi.service;
 
 import br.com.agenciaconectaapi.dto.ServicoDto;
 import br.com.agenciaconectaapi.exception.InfluenciadorJaExisteException;
-import br.com.agenciaconectaapi.exception.InfluenciadorNaoEncontradoException;
-import br.com.agenciaconectaapi.exception.ServicoNaoEncontradoException;
+import br.com.agenciaconectaapi.exception.RecursoNaoEncontradoException;
+import br.com.agenciaconectaapi.exception.RecursoNaoEncontradoException;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.model.Servico;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
@@ -27,7 +27,7 @@ public class ServicoService {
     public Servico buscaServicoPorId(Integer id){
         Optional<Servico> optionalServico = servicoRepository.findById(id);
 
-        return optionalServico.orElseThrow(() ->  new ServicoNaoEncontradoException(SERVICO_NAO_ENCONTRADO));
+        return optionalServico.orElseThrow(() ->  new RecursoNaoEncontradoException(SERVICO_NAO_ENCONTRADO));
     }
 
     public List<Servico> buscarTodosServicos(String ativos, Integer idInfluenciador){
@@ -48,7 +48,7 @@ public class ServicoService {
         }
 
         if(listServicos.isEmpty()){
-            throw new ServicoNaoEncontradoException(NENHUM_SERVICO_ENCONTRADO);
+            throw new RecursoNaoEncontradoException(NENHUM_SERVICO_ENCONTRADO);
         }
 
         return listServicos;
@@ -68,7 +68,7 @@ public class ServicoService {
     public Servico atualizarStatus(Integer id){
         Optional<Servico> optionalServico = servicoRepository.findById(id);
 
-        Servico servico = optionalServico.orElseThrow(() -> new ServicoNaoEncontradoException(SERVICO_NAO_ENCONTRADO));
+        Servico servico = optionalServico.orElseThrow(() -> new RecursoNaoEncontradoException(SERVICO_NAO_ENCONTRADO));
         servico.mudarStatus();
 
         return servicoRepository.save(servico);
@@ -77,14 +77,14 @@ public class ServicoService {
     public Servico atualizarServico(Integer id, ServicoDto servicoDto){
         Optional<Servico> optionalServico = servicoRepository.findById(id);
 
-        optionalServico.orElseThrow(() -> new ServicoNaoEncontradoException(SERVICO_NAO_ENCONTRADO));
+        optionalServico.orElseThrow(() -> new RecursoNaoEncontradoException(SERVICO_NAO_ENCONTRADO));
 
         Servico servico = new Servico(servicoDto);
         servico.setId(id);
         servico.setAtivo(optionalServico.get().isAtivo());
 
         Optional<Influenciador> optionalInfluenciador = influenciadorRepository.findById(servicoDto.getInfluenciadorId());
-        Influenciador influenciador = optionalInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
+        Influenciador influenciador = optionalInfluenciador.orElseThrow(() -> new RecursoNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
 
         servico.setInfluenciador(influenciador);
 
@@ -94,7 +94,7 @@ public class ServicoService {
     public Servico deletarServico(Integer id){
         Optional<Servico> optionalServico = servicoRepository.findById(id);
 
-        Servico servico = optionalServico.orElseThrow(() -> new ServicoNaoEncontradoException(SERVICO_NAO_ENCONTRADO));
+        Servico servico = optionalServico.orElseThrow(() -> new RecursoNaoEncontradoException(SERVICO_NAO_ENCONTRADO));
 
         servicoRepository.delete(servico);
 
@@ -104,6 +104,6 @@ public class ServicoService {
     private Influenciador buscaInfluenciador(Integer id){
         Optional<Influenciador> optionalInfluenciador = influenciadorRepository.findById(id);
 
-        return optionalInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
+        return optionalInfluenciador.orElseThrow(() -> new RecursoNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
     }
 }

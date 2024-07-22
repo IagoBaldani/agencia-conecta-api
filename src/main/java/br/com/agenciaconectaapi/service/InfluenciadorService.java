@@ -3,7 +3,7 @@ package br.com.agenciaconectaapi.service;
 import br.com.agenciaconectaapi.dto.InfluenciadorDto;
 import br.com.agenciaconectaapi.dto.InfluenciadorSimplificadoDto;
 import br.com.agenciaconectaapi.exception.InfluenciadorJaExisteException;
-import br.com.agenciaconectaapi.exception.InfluenciadorNaoEncontradoException;
+import br.com.agenciaconectaapi.exception.RecursoNaoEncontradoException;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.repository.InfluenciadorProjection;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
@@ -27,7 +27,7 @@ public class InfluenciadorService {
     public Influenciador buscarInfluenciadorPorId(Integer idInfluenciador){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(idInfluenciador);
 
-        return optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
+        return optInfluenciador.orElseThrow(() -> new RecursoNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
     }
 
     public List<InfluenciadorSimplificadoDto> buscarInfluenciadoresPorStatus(boolean ativos){
@@ -36,7 +36,7 @@ public class InfluenciadorService {
         List<InfluenciadorSimplificadoDto> listInfluenciadorSimplificadoDto = fromProjectionToDto(projections);
 
         if(listInfluenciadorSimplificadoDto.isEmpty()){
-            throw new InfluenciadorNaoEncontradoException(NENHUM_INFLUENCIADOR_ENCONTRADO);
+            throw new RecursoNaoEncontradoException(NENHUM_INFLUENCIADOR_ENCONTRADO);
         }
 
         return listInfluenciadorSimplificadoDto;
@@ -55,7 +55,7 @@ public class InfluenciadorService {
         }
 
         if(todosInfluencers.isEmpty()){
-            throw new InfluenciadorNaoEncontradoException(NENHUM_INFLUENCIADOR_ENCONTRADO);
+            throw new RecursoNaoEncontradoException(NENHUM_INFLUENCIADOR_ENCONTRADO);
         }
 
         return todosInfluencers;
@@ -94,7 +94,7 @@ public class InfluenciadorService {
     public Influenciador atualizarStatusInfluenciadorPorId(Integer idInfluenciador){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(idInfluenciador);
 
-        Influenciador influenciador = optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
+        Influenciador influenciador = optInfluenciador.orElseThrow(() -> new RecursoNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
         influenciador.mudarStatus();
 
         return influenciadorRepository.save(influenciador);
@@ -103,7 +103,7 @@ public class InfluenciadorService {
     public Influenciador excluirInfluenciador(Integer idInfluenciador){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(idInfluenciador);
 
-        optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
+        optInfluenciador.orElseThrow(() -> new RecursoNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
 
         try {
             influenciadorRepository.delete(optInfluenciador.get());
@@ -118,7 +118,7 @@ public class InfluenciadorService {
     public Influenciador atualizarInfluenciador(InfluenciadorDto influenciadorDto, Integer id){
         Optional<Influenciador> optInfluenciador = influenciadorRepository.findById(id);
 
-        optInfluenciador.orElseThrow(() -> new InfluenciadorNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
+        optInfluenciador.orElseThrow(() -> new RecursoNaoEncontradoException(INFLUENCIADOR_NAO_ENCONTRADO));
 
         Influenciador influenciador = new Influenciador(influenciadorDto);
         influenciador.setId(id);
