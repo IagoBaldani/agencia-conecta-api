@@ -14,4 +14,7 @@ public interface GastoRepository extends JpaRepository<Gasto, Integer> {
     @Query(value = "SELECT id, descricao, valor, data, fixo FROM gastos WHERE MONTH(data) = :mes AND YEAR(data) = :ano", nativeQuery = true)
     List<Gasto> findGastosPorMesAno(Integer mes, Integer ano);
 
+    @Query(value = "SELECT * FROM gastos WHERE fixo GROUP BY valor, descricao", nativeQuery = true)
+    List<Gasto> findAllFixos();
+
 }

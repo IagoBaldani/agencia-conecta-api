@@ -4,6 +4,7 @@ import br.com.agenciaconectaapi.dto.CardDatas;
 import br.com.agenciaconectaapi.dto.CardFinancas;
 import br.com.agenciaconectaapi.model.Influenciador;
 import br.com.agenciaconectaapi.repository.CardDao;
+import br.com.agenciaconectaapi.repository.GastoRepository;
 import br.com.agenciaconectaapi.repository.InfluenciadorRepository;
 import br.com.agenciaconectaapi.repository.ServicoRepository;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ public class CardService {
 
     private final InfluenciadorRepository influenciadorRepository;
     private final ServicoRepository servicoRepository;
+    private final GastoRepository gastoRepository;
     private final CardDao cardDao;
 
 
@@ -40,6 +42,7 @@ public class CardService {
         map.put("ganhosAcessorDeclaravel", servicoRepository.findTotalGanhosAcessorPorMesAno(mes, ano, true));
         map.put("ganhosAcessorNaoDeclaravel", servicoRepository.findTotalGanhosAcessorPorMesAno(mes, ano, false));
         map.put("totalContratos", servicoRepository.findTotalContratosPorMesAno(mes, ano));
+        map.put("totalGastos", gastoRepository.findGastoTotalPorMesAno(mes, ano));
 
         return map;
     }

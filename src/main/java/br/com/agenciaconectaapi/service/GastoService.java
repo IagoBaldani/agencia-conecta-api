@@ -34,6 +34,16 @@ public class GastoService {
         return gastosPorMesAno;
     }
 
+    public List<Gasto> buscarTodosGastosFixos(){
+        List<Gasto> gastosFixos = repository.findAllFixos();
+
+        if(gastosFixos.isEmpty()){
+            throw new RecursoNaoEncontradoException(NENHUM_GASTO_ENCONTRADO);
+        }
+
+        return gastosFixos;
+    }
+
     public Gasto criarGasto(GastoDto gastoDto){
         Gasto gasto = new Gasto(gastoDto);
 

@@ -38,6 +38,18 @@ public class GastoController {
         }
     }
 
+    @RequestMapping(value = "/fixos", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RetornoDto> buscaTodosOsGastosFixos(){
+        try{
+            List<Gasto> gastos = gastoService.buscarTodosGastosFixos();
+
+            return ResponseEntity.status(HttpStatus.OK).body(new RetornoDto(BUSCA_CONCLUIDA, gastos));
+        }
+        catch (Exception e){
+            return ExceptionCatcher.collect(e);
+        }
+    }
+
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RetornoDto> buscaTodosOsGastosPorMesAno(@RequestParam(name = "mes") Integer mes, @RequestParam(name = "ano") Integer ano){
         try{
