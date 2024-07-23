@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 
 public class ExceptionCatcher {
 
@@ -16,8 +15,7 @@ public class ExceptionCatcher {
         RetornoDto retornoDto = new RetornoDto(e.getMessage(), e.getClass());
         LOGGER.trace(e.getMessage(), e);
 
-        if(e.getClass() == InfluenciadorJaExisteException.class || e.getClass() == InfluenciadorNaoEncontradoException.class
-                || e.getClass() == ServicoNaoEncontradoException.class){
+        if(e.getClass() == InfluenciadorJaExisteException.class || e.getClass() == RecursoNaoEncontradoException.class){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(retornoDto);
         }
         if(e.getClass() == BadCredentialsException.class){
