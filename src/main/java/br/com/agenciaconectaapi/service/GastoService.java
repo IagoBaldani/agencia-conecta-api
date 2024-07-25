@@ -25,23 +25,11 @@ public class GastoService {
     }
 
     public List<Gasto> buscarTodosGastosPorMesAno(Integer mes, Integer ano){
-        List<Gasto> gastosPorMesAno = repository.findGastosPorMesAno(mes, ano);
-
-        if(gastosPorMesAno.isEmpty()){
-            throw new RecursoNaoEncontradoException(NENHUM_GASTO_ENCONTRADO);
-        }
-
-        return gastosPorMesAno;
+        return repository.findGastosPorMesAno(mes, ano);
     }
 
     public List<Gasto> buscarTodosGastosFixos(){
-        List<Gasto> gastosFixos = repository.findAllFixos();
-
-        if(gastosFixos.isEmpty()){
-            throw new RecursoNaoEncontradoException(NENHUM_GASTO_ENCONTRADO);
-        }
-
-        return gastosFixos;
+        return repository.findAllFixos();
     }
 
     public Gasto criarGasto(GastoDto gastoDto){
