@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="3" author="iago_baldani">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="servicos" columnName="declaravel"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="servicos">
+            <column name="declaravel" type="bit"/>
+        </addColumn>
+
+        <sql>
+            UPDATE servicos
+            SET declaravel = false;
+        </sql>
+    </changeSet>
+</databaseChangeLog>
